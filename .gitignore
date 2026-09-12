@@ -1,0 +1,64 @@
+# Allowlist: keep only development sources and reproducible small inputs.
+# Ignored files remain on disk. Add an exception when adding a new source type.
+*
+!*/
+
+# Project instructions, architecture, run guides and diagnostic history.
+!/*.md
+!/.gitignore
+!/.gitattributes
+!/config.json
+!/constraints.sdc
+!/pin_order.cfg
+
+# Synthesizable RTL and simulation testbenches.
+!/rtl/*.v
+!/rtl/*.sv
+!/rtl/*.vh
+!/rtl/*.svh
+!/tb/*.v
+!/tb/*.sv
+!/tb/*.vh
+!/tb/*.svh
+
+# Flow tooling, static checks, evidence collectors and replay.
+!/scripts/*.py
+!/scripts/*.sh
+!/scripts/*.tcl
+!/scripts/upstream_lint_review.json
+
+# Firmware sources plus the small, verified prebuilt images.
+!/firmware/*.c
+!/firmware/*.h
+!/firmware/*.S
+!/firmware/*.ld
+!/firmware/generated/sw.hex
+!/firmware/generated/hw.hex
+!/firmware/generated/manifest.json
+
+# Reproducible demo image and its metadata.
+!/inputs/demo/input.pgm
+!/inputs/demo/image.hex
+!/inputs/demo/image.json
+
+# CPU dependency, license and upstream provenance.
+!/third_party/picorv32/picorv32.v
+!/third_party/picorv32/COPYING
+!/third_party/picorv32/README.md
+!/third_party/picorv32/PROVENANCE.md
+
+# Prune generated/heavy/private directories even if they contain source files.
+/build/
+/reports/
+/runs/
+/run_inputs/
+/.codex/
+/.venv/
+/venv/
+/pdk/
+/pdks/
+/.volare/
+**/__pycache__/
+**/node_modules/
+**/.pytest_cache/
+**/.Xil/

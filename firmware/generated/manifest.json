@@ -1,0 +1,18 @@
+{
+  "compiler": "riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "sources": {
+    "main.c": "41c8561e984fda7699d8771e8c89c8aecc973530de4fc4b7c9d0d552214ba010",
+    "start.S": "0b7f5324e4a8f34dc7d01c7f52b50460373726edfb047d5afc991b4314aeea77",
+    "link.ld": "1ecc9dec70ce6c6c7541e2c72161bb31b32a4ba0ff7390ccd1219c8e56153a63"
+  },
+  "images": {
+    "sw": {
+      "bytes": 1600,
+      "sha256": "df573f5febf0a4072dbcd4c853bdce07fb97ef6427cc9042225b5209c0c22f3e"
+    },
+    "hw": {
+      "bytes": 1416,
+      "sha256": "cc86f9c7fa3aa2df413cec162e022eb62f737ddf5387a10ec6b72de3a787bd27"
+    }
+  }
+}
