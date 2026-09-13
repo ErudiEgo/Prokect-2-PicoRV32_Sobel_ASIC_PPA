@@ -164,7 +164,7 @@ def check_openlane(config_path, output):
             "FP_PDN_HPITCH","DIODE_ON_PORTS","RUN_ANTENNA_REPAIR","VSRC_LOC_FILES",
             "CTS_SINK_CLUSTERING_SIZE","RSZ_CORNERS","GRT_DESIGN_REPAIR_MAX_SLEW_PCT",
             "GRT_DESIGN_REPAIR_MAX_CAP_PCT","RUN_HEURISTIC_DIODE_INSERTION",
-            "HEURISTIC_ANTENNA_THRESHOLD","GRT_ANTENNA_MARGIN","GRT_ANTENNA_ITERS","SOBEL_ANTENNA_ONLY")
+            "HEURISTIC_ANTENNA_THRESHOLD","GRT_ANTENNA_MARGIN","GRT_ANTENNA_ITERS","SOBEL_ANTENNA_ONLY","SOBEL_OUTPUT_BUFFER_REPAIR")
     report = {key:flow.config.get(key) for key in keys}
     report["classic_base_steps"] = [s.id for s in Classic.Steps]
     report["classic_steps"] = [s.id for s in flow.Steps]
@@ -245,6 +245,18 @@ def check_openlane(config_path, output):
             else:
                 require(trial.returncode != 0 and 'added non-diode or disconnected instance' in trial.stdout,
                         'Native guard did not reject added logic')
+        require(flow.config['SOBEL_OUTPUT_BUFFER_REPAIR'] == provenance.get('output_buffer_repair', False),
+                'Electrical ECO mode differs from checkpoint provenance')
+        if closure.config['SOBEL_OUTPUT_BUFFER_REPAIR']:
+            for cls in (antenna_closure.OutputBufferEco, antenna_closure.CleanMovedWires, antenna_closure.VerifyOutputBuffers):
+                cls(closure.config, State(), SOBEL_TOPOLOGY_REFERENCE=str(output / 'unused_eco_reference.json'))
+            cmd = ['openroad', '-exit', '-python', str(ROOT / 'scripts/output_buffer_eco.py'),
+                   '--reference', str(output / 'unused_eco_reference.json'), '--plan-only', initial['odb']]
+            trial = subprocess.run(cmd, env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            (output / 'output_buffer_plan.log').write_text(trial.stdout)
+            print(trial.stdout)
+            require(trial.returncode == 0 and 'OUTPUT BUFFER PLAN PASS:' in trial.stdout,
+                    'Two-driver ECO read-only plan failed')
         print('NATIVE GUARD REGRESSION PASS: connected PDK diode accepted; added logic rejected; no ODB edits')
         from openlane.common import Toolbox
         initial_state = State.loads((checkpoint / "state.json").read_text(), validate_path=True)
@@ -312,7 +324,7 @@ def freeze(tag):
     for name in ("rtl","tb","firmware","third_party","scripts"):
         shutil.copytree(ROOT/name,dest/name,ignore=shutil.ignore_patterns("__pycache__","*.pyc"))
     for name in ("config.json","constraints.sdc","pin_order.cfg","README.md","ARCHITECTURE.md",
-                 "OPENLANE_WORKFLOW_NOTES.md","AGENTS.md","ASIC_RUN_GUIDE.md","ASIC_BASE01_REVIEW.md","ASIC_REPAIR02_REVIEW.md","ASIC_REPAIR03_REVIEW.md","ASIC_REPAIR04_REVIEW.md","ASIC_REPAIR06_REVIEW.md","ASIC_REPAIR07_REVIEW.md","ASIC_REPAIR08_REVIEW.md"):
+                 "OPENLANE_WORKFLOW_NOTES.md","AGENTS.md","ASIC_RUN_GUIDE.md","ASIC_BASE01_REVIEW.md","ASIC_REPAIR02_REVIEW.md","ASIC_REPAIR03_REVIEW.md","ASIC_REPAIR04_REVIEW.md","ASIC_REPAIR06_REVIEW.md","ASIC_REPAIR07_REVIEW.md","ASIC_REPAIR08_REVIEW.md","ASIC_REPAIR09_REVIEW.md"):
         shutil.copy2(ROOT/name,dest/name)
     for name,digest in record["functional_sources"].items():
         require(sha((dest/name).read_bytes()) == digest,"Source changed while freezing: "+name)

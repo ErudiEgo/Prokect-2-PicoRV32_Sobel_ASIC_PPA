@@ -2,7 +2,7 @@
 
 Chuẩn bị ngày 2026-09-12. Đây là bước chạy vật lý sau khi người dùng hoàn tất simulation `soc_image_smoke_01`.
 
-**RUN `repair_08` chưa PASS: antenna 4/5, lỗi điện còn tồn tại.** RUN mới `picorv32_sobel_clk50_repair_09` bắt đầu từ checkpoint pre-filler RUN 7 (2/2), dùng native post-DRT repair để giữ dây hiện có làm đầu vào. Không dùng vòng xóa toàn bộ dây/reroute cũ. Xem [chẩn đoán](ASIC_REPAIR08_REVIEW.md).
+**RUN `repair_09` đã PASS Antenna, LVS và DRC; còn lỗi slew/cap và fanout.** RUN mới `picorv32_sobel_clk50_repair_10` tiếp tục checkpoint RUN 9, thêm hai buffer không đảo ở hai driver lỗi tải, rồi kiểm tra antenna và toàn bộ kiểm tra cuối. Chưa có kết quả RUN 10. Xem [chẩn đoán và phạm vi sửa](ASIC_REPAIR09_REVIEW.md).
 
 ## Phạm vi và môi trường
 
@@ -12,7 +12,7 @@ Chuẩn bị ngày 2026-09-12. Đây là bước chạy vật lý sau khi ngư�
 - PDK đã nạp: `sky130A`, library `sky130_fd_sc_hd`, Volare revision `0fe599b2afb6708d281543108caf8310912f54af`.
 - Tham khảo chức năng flow: [OpenLane Classic](https://openlane2.readthedocs.io/en/latest/reference/flows.html). Script kiểm tra phiên bản cài thực tế, không dựa hoàn toàn vào tài liệu latest.
 
-## Cấu hình repair_09 (giữ cấu hình vật lý repair_04)
+## Cấu hình repair_10 (giữ cấu hình vật lý repair_04)
 
 Clock vật lý 50 ns (20 MHz mục tiêu), có CTS. Đây là điểm bắt đầu, chưa phải tần số đạt được. Chưa đổi RTL/firmware để tối ưu tốc độ ảnh: bản HW của RUN mô phỏng đầu tiên vẫn chậm hơn SW về chu kỳ.
 
@@ -20,7 +20,7 @@ Floorplan relative, `FP_CORE_UTIL=35%`, placement target density 50%, padding 2.
 
 SDC dùng clock thật; resetn đồng bộ được timing như dữ liệu. Input/output delay min=0,5 ns, max=5 ns; input transition=0,1 ns; tải output=10 fF; setup uncertainty=0,25 ns, hold uncertainty=0,10 ns. Fanout tối đa 10, transition 1,5 ns, capacitance 0,2 pF. Không có false path hoặc multicycle exception. Các giá trị I/O là giả định phòng thí nghiệm, chưa phải đặc tính của bộ nhớ/bo ngoài. `memory_wait` trong testbench không tự xác định các delay vật lý này.
 
-Giữ lint checker, DRC Magic/KLayout, XOR, LVS và timing/slew/cap ở mọi corner. RUN 9 giữ SOBEL_ANTENNA_ONLY=true; mỗi vòng capture topology → native repair_antennas (1 iteration, margin 30) trên dây đã route → DetailedRouting → guard logic/diode → checker antenna độc lập. Native router cập nhật incremental GRT; không gọi full GlobalRouting/resizer và không tự xóa toàn bộ dbWire. Tối đa ba vòng, dừng sớm khi antenna 0/0. Mọi giới hạn điện, clock, RTL/firmware giữ nguyên. Chi tiết ASIC_REPAIR08_REVIEW.md.
+Giữ lint checker, DRC Magic/KLayout, XOR, LVS và timing/slew/cap ở mọi corner. RUN 10 có chế độ `electrical`: thêm đúng hai buf_8 ở `_07463_/Y` và `_07515_/Y`, legalize, bỏ wire của net sửa hoặc cell bị di chuyển, tạo global guides và detailed routing, kiểm tra kết nối. Sau đó native antenna repair tối đa ba vòng với checker độc lập. Không đổi giới hạn điện, clock hoặc RTL/firmware. Fanout vẫn cần theo dõi và sửa tiếp, không coi exit 0 riêng lẻ là full sign-off.
 
 ## Lint upstream và liên kết chứng cứ
 
@@ -60,7 +60,7 @@ bash scripts/05_asic_precheck.sh
 **4. Người dùng chạy OpenLane Classic:**
 
 ```bash
-bash scripts/06_run_openlane.sh picorv32_sobel_clk50_repair_09 picorv32_sobel_clk50_repair_07
+bash scripts/06_run_openlane.sh picorv32_sobel_clk50_repair_10 picorv32_sobel_clk50_repair_09 electrical
 ```
 
 Lệnh tạo RUN mới, copy/hash checkpoint và chạy từ Sobel.AntennaClosure. Classic vẫn có 81 bước chính, các bước trước checkpoint được bỏ qua; không tổng hợp/placement/DRT ban đầu lại. Script tự kiểm tra lại đầu vào, đóng băng nguồn rồi nạp/lint bản đóng băng trước khi chạy flow. Terminal tương tác được giữ TTY/màu/progress; log do OpenLane lưu, không pipe mất giao diện. Mặc định 4 jobs. Runtime chỉ đo phần tiếp tục; provenance và bản sao checkpoint nằm trong snapshot mới. Nếu config/nguồn/PDK khác checkpoint thì dừng, không tự bỏ qua kiểm tra.
@@ -68,15 +68,15 @@ Lệnh tạo RUN mới, copy/hash checkpoint và chạy từ Sobel.AntennaClosur
 Kết quả nằm tại:
 
 ```text
-~/openlane_projects/picorv32_sobel_asic_ppa/runs/picorv32_sobel_clk50_repair_09
+~/openlane_projects/picorv32_sobel_asic_ppa/runs/picorv32_sobel_clk50_repair_10
 ```
 
-Nguồn đóng băng ở `run_inputs/picorv32_sobel_clk50_repair_09`, gồm source hash, config.frozen.json, input RTL gốc/bản vật lý, firmware và ZIP test. Image/PDK ghi trong environment.txt; runtime.txt ghi thời điểm, thời lượng flow và exit status. Snapshot được mount read-only trong flow. Không ghi đè tag cũ, kể cả khi flow chưa chạy do frozen precheck thất bại.
+Nguồn đóng băng ở `run_inputs/picorv32_sobel_clk50_repair_10`, gồm source hash, config.frozen.json, input RTL gốc/bản vật lý, firmware và ZIP test. Image/PDK ghi trong environment.txt; runtime.txt ghi thời điểm, thời lượng flow và exit status. Snapshot được mount read-only trong flow. Không ghi đè tag cũ, kể cả khi flow chưa chạy do frozen precheck thất bại.
 
 **5. Thu thập và xuất bằng chứng, kể cả flow lỗi:**
 
 ```bash
-bash scripts/07_collect_asic.sh picorv32_sobel_clk50_repair_09
+bash scripts/07_collect_asic.sh picorv32_sobel_clk50_repair_10
 ```
 
 Không chạy lại flow. Mỗi lần collect tạo bộ mới có timestamp trong reports, gồm SUMMARY.txt, metrics.json, STA_SUMMARY.rpt nếu có, config/nguồn, log/report mọi stage và GDS/LEF cuối nếu có. Archive tự copy về thư mục Windows `E:\aa. PPA_Project_List\aaa.PicoRV32_Sobel_ASIC_PPA\reports`. ODB/netlist đầy đủ vẫn nằm trong RUN Ubuntu để mở layout sau này.
@@ -85,7 +85,7 @@ Mở SUMMARY theo đúng đường dẫn script in ra. Chụp màn hình stage l
 
 ## Điều kiện đánh giá
 
-Antenna 0/0 vẫn chưa đủ: RUN 8 có thể còn lỗi điện và exit 2. Cần actual reports: antenna sau detailed routing 0 nets/0 pins; DRC/LVS/XOR/illegal overlap sạch; setup/hold, slew/cap/fanout, disconnected pins, power grid, congestion được kiểm tra. Metric thiếu ghi MISSING; không tự đặt bằng 0. Không lấy 81/81 làm full sign-off.
+Antenna 0/0 vẫn chưa đủ: RUN 9 còn lỗi điện và exit 2. Cần actual reports: antenna sau detailed routing 0 nets/0 pins; DRC/LVS/XOR/illegal overlap sạch; setup/hold, slew/cap/fanout, disconnected pins, power grid, congestion được kiểm tra. Metric thiếu ghi MISSING; không tự đặt bằng 0. Không lấy 81/81 làm full sign-off.
 
 Collector tách area/cell count, core/die/utilization, timing theo corner, vectorless internal/switching/leakage/total power, IR drop và bảng congestion khi có. Chưa ánh xạ switching activity từ workload Sobel vào netlist; VCD simulation không tự thành power annotation. Chưa cung cấp VSRC_LOC_FILES/nguồn package thật, nên IR drop chỉ là đánh giá theo mô hình công cụ, cần đọc warning/nguồn/tải trước khi sử dụng.
 

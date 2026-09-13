@@ -118,3 +118,46 @@ Người dùng yêu cầu học cách hỗ trợ OpenLane trong nguồn này. Nh
 - RUN 9 từ checkpoint RUN 7 (2/2); native một iteration mỗi lần, margin 30, tối đa 3 vòng; guard cho phép chỉ PDK diode mới có kết nối và giữ logic cũ. Vẫn DRT và checker độc lập sau sửa.
 - Config/API/native read preflight/lint/SDC và guard trên ODB thật đã đạt; không có physical step được trợ lý chạy. Xem ASIC_REPAIR08_REVIEW.md.
 - Lệnh: bash scripts/06_run_openlane.sh picorv32_sobel_clk50_repair_09 picorv32_sobel_clk50_repair_07. Lỗi điện vẫn phải đánh giá tiếp từ report thực tế.
+
+## RUN 9 đạt ba PASS; RUN 10 sửa slew/cap
+
+- RUN 9 thực tế antenna 0/0, LVS/DRC PASS; exit 2, max_ss slew 12, nom_ss slew 1, cap 2, fanout 27. Xem ASIC_REPAIR09_REVIEW.md.
+- Hai driver o31ai_4 đã là size lớn nhất. RUN 10 thêm hai buf_8 không đảo, giữ tải/diode, kiểm tra kết nối trước/sau placement/routing rồi native antenna closure. Không nới giới hạn hoặc sửa RTL/firmware.
+- Chế độ electrical phải chọn rõ trong lệnh và được ghi vào frozen config/provenance. Fanout/cây clock xử lý tiếp theo report; không hứa RUN 10 full PASS.
+- Lệnh người dùng: bash scripts/06_run_openlane.sh picorv32_sobel_clk50_repair_10 picorv32_sobel_clk50_repair_09 electrical.
+- Trợ lý chỉ chạy precheck, lint, config/SDC load và đọc ODB. Giữ toàn bộ RUN 9 và evidence; user thực thi physical flow.
+
+## Kết quả RUN 10 và chuyển sang thử ảnh
+
+- Đã đọc log người dùng và SUMMARY trong archive `picorv32_sobel_clk50_repair_10_collect_20260912T163433732014Z.tar.gz`: exit 0, final views, antenna 0/0, LVS/DRC/XOR sạch, setup/hold/slew/cap không vi phạm. Fanout vẫn 27, collector FAIL_OR_INCOMPLETE đúng theo tiêu chí dự án; không nới tiêu chí để đổi nhãn.
+- Có thể thử ảnh ở RTL ngay, song song với công việc còn lại về fanout. Replay hiện tại chỉ phát output/timestamp từ simulation đã kiểm chứng; chưa phải mô phỏng netlist hậu layout hoặc chạy chip thật.
+- Bước xem ngay: Ubuntu `python3 scripts/replay.py reports/soc_image_smoke_01` (cần Tkinter/GUI). Không chạy lại flow hoặc simulation chỉ để mở replay.
+- Ảnh thử đầu nên nhỏ (64x64, rồi 128x128); đầu vào PNG/JPEG được chuyển sang xám. Giới hạn script 512 mỗi chiều; tile mặc định 32, không yêu cầu toàn ảnh 32x32. Chưa có ảnh thật mới do người dùng chọn nên chưa tạo input/RUN mới.
+- Giữ so sánh SW/HW cùng ảnh/biên/số học/memory_wait và overhead. Kết quả cũ SW573713/HW774758 chu kỳ chưa chứng minh tăng tốc. Báo cáo PPA tiếp tục phân biệt vectorless power, phạm vi không RAM/pad/package và warning IR nguồn chưa xác định.
+
+## Kiểm kê và kế hoạch ảnh SIPI
+
+- Đã giải mã đủ 20 TIFF trong images: 14 ảnh 256x256, 6 ảnh 512x512; 13 RGB và 7 L, 8 bit/kênh, một frame, hash riêng. Không sửa ảnh hoặc chạy CPU.
+- Kế hoạch và hash gốc ở IMAGE_TEST_PLAN.md: bắt đầu 5.1.13 chart256, rồi house256/plant256; peppers512/mandrill512 sau khi xử lý watchdog.
+- Ubuntu thiếu Pillow; image prep có thể đọc TIFF qua Pillow, nguồn TIFF đọc trực tiếp từ /mnt/e vì copy script không copy images. Giữ TIFF ngoài Git.
+- Phát hiện timeout 600 s quá ngắn có thể ảnh hưởng 256; lệnh dự kiến dùng --timeout-seconds 3600. Watchdog 100 triệu chu kỳ có nguy cơ chặn 512; chưa sửa watchdog/TB hoặc chạy ảnh lớn trong phiên lập kế hoạch.
+- Không chạy lại OpenLane chỉ vì đổi ảnh. Các số ngoại suy thời gian trong kế hoạch là dự trù từ smoke test, không phải số đo mới.
+
+## 2026-09-13 — ưu tiên Shapes 32/64, hoãn SIPI
+
+- Người dùng yêu cầu test bộ images 2/output_32x32 và output_64x64 trước. Đã đọc đủ 40 PNG, đúng kích thước, mode L 8-bit, một frame. Không chạy script extraction hay sửa ảnh gốc.
+- Đã chuẩn bị input shapes32_00_01, shapes32_01_01, shapes64_00_01, shapes64_01_01 bằng prepare_image.py, so khớp từng byte/hash nguồn. Ubuntu không cần Pillow để chạy các input này. Không tạo output Sobel hoặc chạy simulation.
+- Kế hoạch SMALL_IMAGE_TEST_PLAN.md: hai RUN32 rồi hai RUN64, từng RUN; tile16 để replay 4/16 vùng, memory_wait1, timeout/watchdog giữ nguyên. Mở rộng bộ 40 sau khi lượt nhỏ đạt.
+- Giữ nguyên RTL/firmware/SDC/flow; không cần OpenLane mới. SIPI hoãn, không chạy theo lệnh 256 cũ.
+
+## 2026-09-13 — Shapes 32 đầu tiên PASS
+
+- ZIP soc_shapes32_00_01 đã export. Đã đối chiếu hash, firmware, snapshot với nguồn hiện hành, 1024 pixel/4 tile mỗi SW/HW, output.pgm và timestamp. Không simulation rerun.
+- SW453421 cycles/10.081s host; HW613171 cycles/14.993s host. HW thêm35.2322% chu kỳ, chưa tăng tốc. Chi phí MMIO/CPU là hướng phân tích, chưa đo phân rã.
+- Bước tiếp theo replay rồi soc_shapes32_01_01, tile16/memory_wait1. Giữ bộ ảnh nhỏ; không chạy lại ASIC vì đổi ảnh. Chi tiết/hash archive ở SMALL_IMAGE_TEST_PLAN.md.
+
+## 2026-09-13 — replay xác nhận trực quan, chuyển sang phân tích hiệu năng
+
+- Người dùng đã mở replay soc_shapes32_00_01 và xác nhận hiển thị vùng16x16 phù hợp. Ảnh chụp hiển thị SW453421/HW613171 đúng trace; không sửa số liệu/tốc độ replay để tạo tăng tốc.
+- Source filter HW có ít nhất5 MMIO transactions/pixel (2 data writes, start, status, result), cộng việc CPU lấy pixel/địa chỉ. Core kết thúc cạnh kế sau start; cần giảm overhead giao tiếp.
+- PERFORMANCE_OPTIMIZATION_PLAN.md ghi bước profiling TB theo handshake trước, rồi giảm giao dịch/streaming nếu dữ liệu đo hỗ trợ; giữ baseline32, test64 sau. Chưa sửa RTL/firmware, chưa chạy test mới. Không mặc định dùng lại PPA RUN10 cho phần cứng mới.

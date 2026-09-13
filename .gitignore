@@ -62,3 +62,17 @@
 **/node_modules/
 **/.pytest_cache/
 **/.Xil/
+
+# Four small, verified Shapes inputs; raw dataset and other images stay ignored.
+!/inputs/shapes32_00_01/input.pgm
+!/inputs/shapes32_00_01/image.hex
+!/inputs/shapes32_00_01/image.json
+!/inputs/shapes32_01_01/input.pgm
+!/inputs/shapes32_01_01/image.hex
+!/inputs/shapes32_01_01/image.json
+!/inputs/shapes64_00_01/input.pgm
+!/inputs/shapes64_00_01/image.hex
+!/inputs/shapes64_00_01/image.json
+!/inputs/shapes64_01_01/input.pgm
+!/inputs/shapes64_01_01/image.hex
+!/inputs/shapes64_01_01/image.json

@@ -4,9 +4,11 @@
 
 **Nền tảng đã chốt:** OpenLane Classic, SKY130 `sky130A / sky130_fd_sc_hd`. Người dùng chạy simulation và OpenLane; trợ lý chuẩn bị nguồn, kiểm tra tĩnh, phân tích và sửa lỗi.
 
+**Test tiếp theo (2026-09-13):** Shapes 32x32 rồi 64x64, tile16, memory_wait1. RUN `soc_shapes32_00_01` đã PASS: 1024 pixel/4 tile mỗi SW/HW; SW 453421 chu kỳ, HW 613171 chu kỳ (+35,23%). ZIP đã được đối chiếu lại pixel/timestamp/hash, không chạy lại mô phỏng. Còn ba input tiếp theo đã chuẩn bị. Xem [kế hoạch và lệnh](SMALL_IMAGE_TEST_PLAN.md). Hoãn SIPI 256/512.
+
 ## Trạng thái ngày 2026-09-12
 
-**Mới nhất:** `repair_08` còn antenna 4 net/5 pin, slew max_ss 12/nom_ss 6, cap 2 và fanout 25; LVS/DRC PASS, flow chưa đạt. Đã chuẩn bị và precheck `repair_09`: dùng native post-DRT antenna repair để giữ dây làm đầu vào và cập nhật routing theo net thay đổi. Đi từ checkpoint RUN 7 (2/2) để giữ mốc tốt hơn. Xem [chẩn đoán RUN 8](ASIC_REPAIR08_REVIEW.md) và [lệnh chạy](ASIC_RUN_GUIDE.md). RUN 9 chưa chạy.
+**Mới nhất:** `repair_10` đã hoàn tất OpenLane với exit 0, xuất final views; Antenna (0/0), LVS, DRC, setup/hold, slew và cap đạt các kiểm tra hiện có. Báo cáo vẫn còn **27 vi phạm fanout**, nên collector giữ `FAIL_OR_INCOMPLETE`; chưa kết luận toàn bộ yêu cầu ASIC đã đạt. Bằng chứng: `reports/picorv32_sobel_clk50_repair_10_collect_20260912T163433732014Z.tar.gz`. Có thể tiếp tục thử ảnh bằng mô phỏng RTL và xem replay; đây là quy trình riêng với kiểm tra layout/GDS. Giữ RUN 10 làm mốc, không chạy lại chỉ để mở báo cáo.
 
 Đã có RTL tích hợp CPU + Sobel MMIO, hai firmware RV32I, testbench CPU thực thi, checker từng pixel/sự kiện theo vùng và desktop replay. **Người dùng đã chạy `soc_image_smoke_01`: core/MMIO và hai bản CPU đạt kiểm tra chức năng cho ảnh 37 × 35. SW = 573.713 chu kỳ; HW = 774.758 chu kỳ, nhiều hơn 35,04%.** Trợ lý đã đối chiếu lại ZIP, hash, toàn bộ pixel và sự kiện tile mà không chạy lại mô phỏng. Xem [đánh giá simulation](FIRST_RUN_REVIEW.md).
 

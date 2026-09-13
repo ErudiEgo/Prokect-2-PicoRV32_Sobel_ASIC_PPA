@@ -69,6 +69,27 @@ class NativeAntennaRepair(GlobalRouting):
         return str(Path(__file__).with_name('native_antenna_repair.tcl'))
 
 
+class OutputBufferEco(VerifyAntennaTopology):
+    id = 'Sobel.OutputBufferEco'
+
+    def get_script_path(self):
+        return str(Path(__file__).with_name('output_buffer_eco.py'))
+
+
+class CleanMovedWires(OutputBufferEco):
+    id = 'Sobel.CleanMovedWires'
+
+    def get_command(self):
+        return super().get_command() + ['--mode', 'cleanup']
+
+
+class VerifyOutputBuffers(OutputBufferEco):
+    id = 'Sobel.VerifyOutputBuffers'
+
+    def get_command(self):
+        return super().get_command() + ['--mode', 'verify']
+
+
 class VerifyNativeTopology(VerifyAntennaTopology):
     id = 'Sobel.VerifyNativeTopology'
 
@@ -94,7 +115,8 @@ class AntennaClosure(CompositeStep):
     # config, ODB, logs and state snapshots receive standard OpenLane handling.
     Steps = [CheckAntennas, TargetedDiodes, DetailedPlacement, RepairDesign,
              RepairTiming, GlobalRouting, DetailedRouting, VerifyAntennaTopology,
-             CaptureAntennaTopology, NativeAntennaRepair, VerifyNativeTopology]
+             CaptureAntennaTopology, NativeAntennaRepair, VerifyNativeTopology,
+             OutputBufferEco, CleanMovedWires, VerifyOutputBuffers]
 
     def run(self, state_in, **kwargs):
         state = state_in
@@ -106,6 +128,19 @@ class AntennaClosure(CompositeStep):
             step = cls(self.config, state, **overrides)
             state = step.start(toolbox=self.toolbox, step_dir=str(directory), _no_rule=True)
             return step
+
+        if self.config['SOBEL_OUTPUT_BUFFER_REPAIR']:
+            if not antenna_only:
+                raise ValueError('Output buffer ECO requires an explicit routed continuation')
+            folder = Path(self.step_dir) / 'electrical_eco'
+            reference = str(folder / 'output_buffer_reference.json')
+            folder.mkdir(parents=True, exist_ok=True)
+            run_step(OutputBufferEco, folder/'01-insert-buffers', SOBEL_TOPOLOGY_REFERENCE=reference)
+            run_step(DetailedPlacement, folder/'02-legalize')
+            run_step(CleanMovedWires, folder/'03-clean-moved-wires', SOBEL_TOPOLOGY_REFERENCE=reference)
+            run_step(GlobalRouting, folder/'04-global-routing')
+            run_step(DetailedRouting, folder/'05-detailed-routing')
+            run_step(VerifyOutputBuffers, folder/'06-verify-buffers', SOBEL_TOPOLOGY_REFERENCE=reference)
 
         # Three targeted repair attempts maximum. Always check the final result;
         # zero violation metrics are never written by this controller.
@@ -155,3 +190,6 @@ AntennaClosure.config_vars = [v for v in AntennaClosure.config_vars if v.name no
 
 AntennaClosure.config_vars.append(Variable('SOBEL_ANTENNA_ONLY', bool,
     'Resume a completed antenna closure checkpoint without resizing logic', default=False))
+
+AntennaClosure.config_vars.append(Variable("SOBEL_OUTPUT_BUFFER_REPAIR", bool,
+    "Insert two reviewed non-inverting output buffers before antenna closure", default=False))

@@ -3,10 +3,13 @@
 set -euo pipefail
 source "$(dirname -- "$0")/asic_common.sh"
 require_linux_project
-[[ $# == 1 || $# == 2 ]] || { echo 'Usage: bash scripts/06_run_openlane.sh NEW_RUN_TAG [PARENT_DRT_RUN]' >&2; exit 2; }
+[[ $# == 1 || $# == 2 || $# == 3 ]] || { echo 'Usage: bash scripts/06_run_openlane.sh NEW_RUN_TAG [PARENT_DRT_RUN] [antenna|electrical]' >&2; exit 2; }
 TAG=$1
 check_tag "$TAG"
 PARENT=${2:-}
+MODE=${3:-antenna}
+[[ "$MODE" == antenna || "$MODE" == electrical ]] || { echo "Invalid mode" >&2; exit 2; }
+[[ "$MODE" != electrical || -n "$PARENT" ]] || { echo "Electrical ECO requires parent RUN" >&2; exit 2; }
 if [[ -n "$PARENT" ]]; then check_tag "$PARENT"; fi
 cd "$PROJECT_DIR"
 [[ ! -e "runs/$TAG" && ! -e "run_inputs/$TAG" ]] || { echo 'RUN/snapshot exists; choose a NEW tag.' >&2; exit 1; }
@@ -20,7 +23,7 @@ SNAPSHOT="$PROJECT_DIR/run_inputs/$TAG"
 printf 'image=%s\nimage_id=%s\npdk_root=%s\npdk_resolved=%s\n' \
     "$IMAGE" "$IMAGE_ID" "$PDK_STORE" "$PDK_RESOLVED" > "$SNAPSHOT/environment.txt"
 if [[ -n "$PARENT" ]]; then
-    python3 "$SNAPSHOT/scripts/resume_checkpoint.py" "$PARENT" "$TAG"
+    python3 "$SNAPSHOT/scripts/resume_checkpoint.py" "$PARENT" "$TAG" "$MODE"
 fi
 CHECK=$(mktemp -d "$PROJECT_DIR/build/frozen_precheck_XXXXXXXX")
 # Load and lint the exact frozen config before launching the real flow.

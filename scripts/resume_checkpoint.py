@@ -11,7 +11,8 @@ from collect_asic import integrity, load, sha, stage_number
 from antenna_targets import checked_targets
 
 
-def prepare(root, parent, tag):
+def prepare(root, parent, tag, mode="antenna"):
+    if mode not in ("antenna", "electrical"): raise ValueError("Unknown continuation mode")
     for name in (parent, tag):
         if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', name):
             raise ValueError('Unsafe RUN name')
@@ -49,7 +50,8 @@ def prepare(root, parent, tag):
         history = load(routed/'closure_history.json')
         if not history: raise ValueError('Completed closure has no audit history')
         # Select the pre-filler composite output, never final sign-off/filler ODB.
-        # All earlier repairs are retained; no resizer may run in this continuation.
+        # Earlier repairs are retained. Explicit electrical ECO may add output buffers;
+        # normal antenna continuation does not alter logic connectivity.
     state_path = routed/'state_out.json' 
     state = load(state_path)
     if not state.get('odb'): raise ValueError('Checkpoint has no ODB')
@@ -113,14 +115,17 @@ def prepare(root, parent, tag):
               'parent_state':str(state_path.relative_to(root)),'parent_state_sha256':sha(state_path),
               'parent_cts_state':str(cts_state.relative_to(root)),
               'checkpoint_kind':'completed_antenna_closure' if antenna_only else 'detailed_routing',
-              'antenna_only':antenna_only,
+              'antenna_only':antenna_only, 'output_buffer_repair': mode == 'electrical',
               'parent_congestion_log':congestion,'copied_views':copies,
               'parent_antenna_report':str(antenna_report[0].relative_to(root)),
               'runtime_scope':'Continuation only; excludes parent synthesis/placement/routing time'}
     (dest/'provenance.json').write_text(json.dumps(record,indent=2)+'\n')
     frozen_path = new/'config.frozen.json'
     frozen = load(frozen_path)
+    if mode == 'electrical' and (not antenna_only or antenna_report[1]):
+        raise ValueError('Electrical ECO requires a completed zero-antenna checkpoint')
     frozen['SOBEL_ANTENNA_ONLY'] = antenna_only
+    frozen['SOBEL_OUTPUT_BUFFER_REPAIR'] = mode == 'electrical'
     frozen_path.write_text(json.dumps(frozen,indent=2)+'\n')
     manifest = load(new/'source_sha256.json')
     manifest['config.frozen.json'] = sha(frozen_path)
