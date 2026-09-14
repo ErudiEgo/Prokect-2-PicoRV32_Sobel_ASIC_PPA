@@ -4,6 +4,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -13,11 +14,13 @@ from pathlib import Path
 from evidence import golden
 
 ROOT = Path(__file__).resolve().parents[1]
-TEST = "soc_image_smoke_01"
-SOURCES = ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "rtl/picorv32_sobel_soc.v",
+TEST = "soc_std32_shape10_01"
+BENCHMARK_TESTS = (TEST, "soc_std64_00022_01", "soc_std128_00000002_01", "soc_std256_4105_01")
+SOURCES = ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "rtl/sobel_tile.v", "rtl/native_bus_arbiter.v", "rtl/picorv32_sobel_soc.v",
            "third_party/picorv32/picorv32.v"]
 REPAIR_STEPS = {
-    "-OpenROAD.ResizerTimingPostGRT": "OpenROAD.RepairDesignPostGRT",
+    "OpenROAD.CTS": "Sobel.CTSWithFanoutMargin",
+    "-OpenROAD.ResizerTimingPostGRT": "Sobel.RepairDesignSlowCorner",
     "+OpenROAD.ResizerTimingPostGRT": "OpenROAD.RepairAntennas",
     "+OpenROAD.DetailedRouting": "Sobel.AntennaClosure",
 }
@@ -36,11 +39,11 @@ def require(ok, message):
         raise ValueError(message)
 
 
-def require_functional():
-    archive = ROOT / "reports" / (TEST + ".zip")
+def require_functional(test=TEST):
+    archive = ROOT / "reports" / (test + ".zip")
     require(archive.is_file(), f"Missing functional evidence: {archive}")
     with zipfile.ZipFile(archive) as z:
-        def read(name): return z.read(TEST + "/" + name)
+        def read(name): return z.read(test + "/" + name)
         def load(name): return json.loads(read(name))
         manifest = load("inputs.sha256.json")
         for name, digest in manifest.items():
@@ -72,10 +75,10 @@ def require_functional():
                 require(v == expected[y*w+x], f"Pixel mismatch: {mode} ({x},{y})")
                 seen.add((x,y))
         require(all(c["exit_code"] == 0 for c in load("commands.json")), "Failed functional subprocess")
-    record = {"test": TEST, "archive_sha256": sha(archive.read_bytes()),
+    record = {"test": test, "archive_sha256": sha(archive.read_bytes()),
               "functional_sources": {n:d for n,d in manifest.items() if n.startswith(("rtl/","tb/","firmware/","third_party/"))},
               "comparison": comparison}
-    print(f"FUNCTIONAL EVIDENCE MATCH: {TEST}; SW/HW pixels rechecked; no simulation rerun")
+    print(f"FUNCTIONAL EVIDENCE MATCH: {test}; SW/HW pixels rechecked; no simulation rerun")
     return record
 
 
@@ -120,7 +123,7 @@ def prepare_sources(root):
 def validate():
     c = json.loads((ROOT / "config.json").read_text())
     require(c["meta"] == {"version":2,"flow":"Classic","substituting_steps":REPAIR_STEPS},
-            "Expected Classic with only the three reviewed repair additions")
+            "Expected Classic with three repair additions and CTS fanout wrapper")
     require(c["DESIGN_NAME"] == "picorv32_sobel_soc", "Wrong physical top")
     require(c["PDK"] == "sky130A" and c["STD_CELL_LIBRARY"] == "sky130_fd_sc_hd", "Wrong PDK/library")
     require(c["SYNTH_PARAMETERS"] == ["ENABLE_SOBEL=1"], "Initial physical run must include Sobel")
@@ -138,7 +141,8 @@ def validate():
         require(c.get(key) == ["*"], "Must check all corners: "+key)
     for key in ("PNR_SDC_FILE","SIGNOFF_SDC_FILE","FP_PIN_ORDER_CFG"):
         require((ROOT / c[key].removeprefix("dir::")).is_file(), "Missing: "+key)
-    require_functional()
+    for test in BENCHMARK_TESTS:
+        require_functional(test)
     prepare_sources(ROOT)
     print("ASIC INPUT CHECK PASS: CPU + Sobel; external program/image memory excluded")
 
@@ -164,7 +168,7 @@ def check_openlane(config_path, output):
             "FP_PDN_HPITCH","DIODE_ON_PORTS","RUN_ANTENNA_REPAIR","VSRC_LOC_FILES",
             "CTS_SINK_CLUSTERING_SIZE","RSZ_CORNERS","GRT_DESIGN_REPAIR_MAX_SLEW_PCT",
             "GRT_DESIGN_REPAIR_MAX_CAP_PCT","RUN_HEURISTIC_DIODE_INSERTION",
-            "HEURISTIC_ANTENNA_THRESHOLD","GRT_ANTENNA_MARGIN","GRT_ANTENNA_ITERS","SOBEL_ANTENNA_ONLY","SOBEL_OUTPUT_BUFFER_REPAIR")
+            "HEURISTIC_ANTENNA_THRESHOLD","GRT_ANTENNA_MARGIN","GRT_ANTENNA_ITERS","SOBEL_ANTENNA_ONLY","SOBEL_OUTPUT_BUFFER_REPAIR","SOBEL_NATIVE_ANTENNA_REPAIR","SOBEL_DESIGN_REPAIR_CORNERS","GRT_RESIZER_HOLD_SLACK_MARGIN","SOBEL_CTS_FANOUT_TARGET","SOBEL_SIGNAL_FANOUT_TARGET","CTS_DISTANCE_BETWEEN_BUFFERS","SOBEL_CTS_BRANCH_BUFFER_DISTANCE","SOBEL_POST_FANOUT_MARGIN_PCT")
     report = {key:flow.config.get(key) for key in keys}
     report["classic_base_steps"] = [s.id for s in Classic.Steps]
     report["classic_steps"] = [s.id for s in flow.Steps]
@@ -174,12 +178,27 @@ def check_openlane(config_path, output):
     base_ids = [canonical(s.id) for s in Classic.Steps]
     actual_ids = [canonical(s.id) for s in flow.Steps]
     expected_ids = list(base_ids)
+    expected_ids[expected_ids.index("OpenROAD.CTS")] = "Sobel.CTSWithFanoutMargin"
     at = expected_ids.index("OpenROAD.ResizerTimingPostGRT")
-    expected_ids.insert(at, "OpenROAD.RepairDesignPostGRT")
+    expected_ids.insert(at, "Sobel.RepairDesignSlowCorner")
     expected_ids.insert(at+2, "OpenROAD.RepairAntennas")
     expected_ids.insert(expected_ids.index("OpenROAD.DetailedRouting")+1, "Sobel.AntennaClosure")
     require(actual_ids == expected_ids and len(actual_ids) == 81,
             "Classic repair sequence differs from reviewed 78 + 3 steps")
+    # Tcl policy tests use mocked native commands only; never invoke physical repair.
+    policy_test = subprocess.run(["openroad", "-exit", str(ROOT / "scripts/test_fanout_policy.tcl")],
+                                 env=dict(os.environ, SOBEL_SCRIPT_DIR=str(ROOT / "scripts")), text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    (output / "fanout_policy_mock.log").write_text(policy_test.stdout)
+    require(policy_test.returncode == 0 and "FANOUT POLICY MOCK PASS:" in policy_test.stdout,
+            "Fanout policy restoration/delegation regression failed")
+    print(policy_test.stdout)
+    env_test = subprocess.run([sys.executable, str(ROOT / "scripts/test_fanout_env.py"),
+                               str(output / "fanout_env_regression")],
+                              text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    (output / "fanout_env_regression.log").write_text(env_test.stdout)
+    print(env_test.stdout)
+    require(env_test.returncode == 0 and "FANOUT ENV REGRESSION PASS:" in env_test.stdout,
+            "Actual Tcl wrapper/env serialization regression failed")
     # Construct child configurations only. Never call Step.start here.
     from openlane.state import State
     closure = antenna_closure.AntennaClosure(flow.config, State())
@@ -192,6 +211,16 @@ def check_openlane(config_path, output):
     antenna_closure.GlobalRouting(closure.config, State())
     antenna_closure.VerifyAntennaTopology(closure.config, State(),
                                          SOBEL_TOPOLOGY_REFERENCE=str(output / "topology_reference.json"))
+    cts = antenna_closure.CTSWithFanoutMargin(flow.config, State())
+    require(flow.config["CTS_DISTANCE_BETWEEN_BUFFERS"] == 80 and cts.config["SOBEL_CTS_BRANCH_BUFFER_DISTANCE"] == 1, "CTS branch buffering policy changed")
+    require(cts.config["SOBEL_CTS_FANOUT_TARGET"] == 6, "CTS optimization target changed")
+    slow_repair = antenna_closure.RepairDesignSlowCorner(flow.config, State())
+    require(slow_repair.config["SOBEL_POST_FANOUT_MARGIN_PCT"] == 70, "Post-fanout margin changed")
+    require(slow_repair.config["SOBEL_SIGNAL_FANOUT_TARGET"] == 5, "Diode load headroom changed")
+    require(flow.config["MAX_FANOUT_CONSTRAINT"] == 10, "Final fanout limit must remain 10")
+    require(slow_repair.config["SOBEL_DESIGN_REPAIR_CORNERS"] == ["max_ss_100C_1v60"],
+            "Extra electrical repair must use measured failing corner")
+    require(abs(float(flow.config["GRT_RESIZER_HOLD_SLACK_MARGIN"]) - 0.2) < 1e-9, "Expected 0.2ns hold optimization margin")
     print("TARGETED REPAIR CONFIG PASS: child configs constructed; no Step.start called")
     api_test = subprocess.run([sys.executable, str(ROOT / "scripts/test_repair_api.py")],
                               text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -200,7 +229,6 @@ def check_openlane(config_path, output):
     require(api_test.returncode == 0, "Installed OpenLane API regression failed")
     checkpoint = config_path.parent / "resume_checkpoint"
     if checkpoint.is_dir():
-        import os
         import openlane
         initial = json.loads((checkpoint / "state.json").read_text())
         provenance = json.loads((checkpoint / "provenance.json").read_text())
@@ -310,6 +338,32 @@ def check_openlane(config_path, output):
     (output/"sdc_load.log").write_text(r.stdout)
     print(r.stdout)
     require(r.returncode == 0 and "SDC LOAD PASS:" in r.stdout and not re.search(r"\[ERROR|^Error",r.stdout,re.M), "SDC loading failed")
+    # Actual library/LEF objects expose same-name CTS cell collisions that mocks
+    # cannot detect. Only a port declaration and a no-op CTS delegate are used.
+    cell_tcl = []
+    lib_corners = [(key.replace("*", "nom"), paths) for key, paths in flow.config["LIB"].items()]
+    cell_tcl.append("define_corners " + " ".join(corner for corner, _ in lib_corners))
+    for corner, paths in lib_corners:
+        for path in paths:
+            cell_tcl.append(f"read_liberty -corner {corner} {{{path}}}")
+    cell_tcl.append(f"read_lef {{{tech}}}")
+    for path in flow.config["CELL_LEFS"]:
+        cell_tcl.append(f"read_lef {{{path}}}")
+    cell_tcl += [f"read_verilog {{{output / 'ports_only.v'}}}", "link_design picorv32_sobel_soc"]
+    from openlane.common import TclUtils
+    for key in ("CTS_CLK_BUFFERS", "CTS_ROOT_BUFFER", "SOBEL_CTS_FANOUT_TARGET", "MAX_FANOUT_CONSTRAINT", "CTS_DISTANCE_BETWEEN_BUFFERS", "SOBEL_CTS_BRANCH_BUFFER_DISTANCE"):
+        value = flow.config[key]
+        value = TclUtils.join(value) if isinstance(value, list) else str(value)
+        cell_tcl.append(TclUtils.join(["set", f"::env({key})", value]))
+    cell_tcl.append(TclUtils.join(["set", "::env(SOBEL_SCRIPT_DIR)", str(ROOT / "scripts")]))
+    cell_tcl.append(f"source {{{ROOT / 'scripts/test_fanout_cells.tcl'}}}")
+    (output / "fanout_cells.tcl").write_text("\n".join(cell_tcl) + "\n")
+    cell_test = subprocess.run(["openroad", "-exit", str(output / "fanout_cells.tcl")],
+                               text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    (output / "fanout_cells.log").write_text(cell_test.stdout)
+    print(cell_test.stdout)
+    require(cell_test.returncode == 0 and "FANOUT CELL REGRESSION PASS:" in cell_test.stdout,
+            "Multi-corner physical CTS master regression failed")
     print(f"ASIC PRECHECK PASS: config loaded; standalone lint passed; Classic has {len(flow.Steps)} steps (78 original + 3 repair additions)")
     print("Lint uses 33 reviewed, exact-line upstream style annotations; see upstream_lint_review.json.")
     print("No simulation, synthesis, floorplan, routing or physical checker was run.")
@@ -319,17 +373,22 @@ def freeze(tag):
     require(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}",tag), "Unsafe RUN name")
     require(not (ROOT / "runs" / tag).exists(), "RUN exists; use new tag")
     dest = ROOT / "run_inputs" / tag
-    record = require_functional()
+    records = [require_functional(test) for test in BENCHMARK_TESTS]
+    record = records[0]
     dest.mkdir(parents=True, exist_ok=False)
     for name in ("rtl","tb","firmware","third_party","scripts"):
         shutil.copytree(ROOT/name,dest/name,ignore=shutil.ignore_patterns("__pycache__","*.pyc"))
     for name in ("config.json","constraints.sdc","pin_order.cfg","README.md","ARCHITECTURE.md",
-                 "OPENLANE_WORKFLOW_NOTES.md","AGENTS.md","ASIC_RUN_GUIDE.md","ASIC_BASE01_REVIEW.md","ASIC_REPAIR02_REVIEW.md","ASIC_REPAIR03_REVIEW.md","ASIC_REPAIR04_REVIEW.md","ASIC_REPAIR06_REVIEW.md","ASIC_REPAIR07_REVIEW.md","ASIC_REPAIR08_REVIEW.md","ASIC_REPAIR09_REVIEW.md"):
+                 "OPENLANE_WORKFLOW_NOTES.md","AGENTS.md","ASIC_DMA_BASELINE_GUIDE.md","RUN16_REPAIR_PLAN.md","RUN15_REVIEW.md","RUN12_PRESERVATION_AND_FANOUT.md","TILE_DMA_RUN_GUIDE.md","ASIC_RUN_GUIDE.md","ASIC_BASE01_REVIEW.md","ASIC_REPAIR02_REVIEW.md","ASIC_REPAIR03_REVIEW.md","ASIC_REPAIR04_REVIEW.md","ASIC_REPAIR06_REVIEW.md","ASIC_REPAIR07_REVIEW.md","ASIC_REPAIR08_REVIEW.md","ASIC_REPAIR09_REVIEW.md"):
         shutil.copy2(ROOT/name,dest/name)
     for name,digest in record["functional_sources"].items():
         require(sha((dest/name).read_bytes()) == digest,"Source changed while freezing: "+name)
     shutil.copy2(ROOT / "reports" / (TEST+".zip"),dest / "functional_evidence.zip")
     save(dest / "functional_link.json",record)
+    (dest / "benchmark_evidence").mkdir()
+    for item in records:
+        shutil.copy2(ROOT / "reports" / (item["test"]+".zip"), dest / "benchmark_evidence" / (item["test"]+".zip"))
+    save(dest / "benchmark_link.json", records)
     prepare_sources(dest)
     def bind(v):
         if isinstance(v,str) and v.startswith("dir::"):

@@ -1,5 +1,8 @@
 # Test ảnh nhỏ Shapes — kế hoạch đang áp dụng
 
+**Cập nhật 2026-09-13:** bản Tile DMA đã được triển khai và compile/lint, chưa chạy simulation. Bước hiện tại là `soc_shapes32_dma_01` theo [TILE_DMA_RUN_GUIDE.md](TILE_DMA_RUN_GUIDE.md). Các lệnh/diễn giải baseline dưới đây là lịch sử; chưa chạy OpenLane cho bản mới.
+
+
 Cập nhật 2026-09-13 theo yêu cầu người dùng: 32x32 trước, 64x64 sau.
 Hoãn bộ SIPI 256/512. RUN soc_shapes32_00_01 đã được người dùng chạy và đã kiểm chứng PASS; các RUN tiếp theo chưa được xác nhận.
 

@@ -1,5 +1,8 @@
 # Tối ưu PicoRV32 + Sobel: giữ baseline, giảm chi phí giao tiếp
 
+**Cập nhật 2026-09-13:** bản Tile DMA đã được triển khai và compile/lint, chưa chạy simulation. Bước hiện tại là `soc_shapes32_dma_01` theo [TILE_DMA_RUN_GUIDE.md](TILE_DMA_RUN_GUIDE.md). Các lệnh/diễn giải baseline dưới đây là lịch sử; chưa chạy OpenLane cho bản mới.
+
+
 Ngày 2026-09-13. Người dùng xác nhận GUI replay hoạt động, hiển thị vùng 16x16
 đúng mong muốn. Chưa chạy simulation hoặc physical flow mới trong lần phân tích này.
 

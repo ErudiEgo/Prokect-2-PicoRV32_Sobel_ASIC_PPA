@@ -31,7 +31,17 @@ module tb_sobel_soc;
     reg held_instr;
     reg measuring=0, ended=0;
     longint unsigned cycle=0, start_cycle=0, end_cycle=0;
+    longint unsigned max_cycles=100000000;
     string firmware_path, image_path;
+    // Observation only: never drives DUT or memory handshake. Count end-start edges.
+    integer profile_fd;
+    longint unsigned prof_cycles=0, cpu_idle_cycles=0, cpu_fetch_cycles=0;
+    longint unsigned cpu_mmio_cycles=0, cpu_data_cycles=0, cpu_wait_cycles=0;
+    longint unsigned dma_wait_cycles=0, tile_busy_cycles=0;
+    longint unsigned cpu_fetch_tx=0, cpu_data_read_tx=0, cpu_data_write_tx=0;
+    longint unsigned mmio_read_tx=0, mmio_write_tx=0, tile_start_tx=0, tile_status_tx=0;
+    longint unsigned dma_read_tx=0, dma_write_tx=0;
+
 
     task automatic store_word(input integer address, input reg [31:0] value);
         integer n;
@@ -48,6 +58,8 @@ module tb_sobel_soc;
         if (!$value$plusargs("height=%d",height)) $fatal(1,"Missing height");
         if (!$value$plusargs("tile=%d",tile_size)) tile_size=32;
         if (!$value$plusargs("memory_wait=%d",memory_wait)) memory_wait=1;
+        if (!$value$plusargs("max_cycles=%d",max_cycles)) max_cycles=100000000;
+        if(max_cycles<1 || max_cycles>2000000000) $fatal(1,"Invalid cycle watchdog");
         if(width<1 || width>512 || height<1 || height>512 || tile_size<1 || tile_size>64)
             $fatal(1,"Invalid dimensions");
         if(firmware_bytes<1 || firmware_bytes>32768 || memory_wait<0 || memory_wait>100)
@@ -73,14 +85,38 @@ module tb_sobel_soc;
         @(negedge clk); resetn=1;
     end
 
-    // External synchronous memory/host model. Writes and event timestamps occur
+    // Shared external synchronous memory/host model for CPU and DMA. Writes and event timestamps occur
     // on the exact clock edge on which CPU sees valid && ready.
     always @(posedge clk) begin
         if(!resetn) begin ext_ready<=0; wait_count=0; cycle=0; end
         else begin
             cycle=cycle+1;
             if(trap) $fatal(1,"CPU trap at cycle %0d address=%h",cycle,ext_addr);
-            if(cycle>100000000) $fatal(1,"CPU watchdog timeout");
+            if(cycle>max_cycles) $fatal(1,"CPU watchdog timeout at %0d cycles (limit %0d)",cycle,max_cycles);
+            if(measuring) begin
+                prof_cycles=prof_cycles+1;
+                if(!dut.cpu_valid) cpu_idle_cycles=cpu_idle_cycles+1;
+                else if(dut.peripheral_select) cpu_mmio_cycles=cpu_mmio_cycles+1;
+                else if(dut.cpu_instr) cpu_fetch_cycles=cpu_fetch_cycles+1;
+                else cpu_data_cycles=cpu_data_cycles+1;
+                if(dut.cpu_valid && !dut.cpu_ready) cpu_wait_cycles=cpu_wait_cycles+1;
+                if(dut.dma_valid && !dut.dma_ready) dma_wait_cycles=dma_wait_cycles+1;
+                if(dut.unused_tile_busy) tile_busy_cycles=tile_busy_cycles+1;
+                if(dut.cpu_valid && dut.cpu_ready) begin
+                    if(dut.peripheral_select) begin
+                        if(dut.cpu_wstrb==0) mmio_read_tx=mmio_read_tx+1;
+                        else mmio_write_tx=mmio_write_tx+1;
+                        if(dut.cpu_addr[7:0]==8'h80 && dut.cpu_wstrb==4'hf && dut.cpu_wdata[0]) tile_start_tx=tile_start_tx+1;
+                        if(dut.cpu_addr[7:0]==8'h84 && dut.cpu_wstrb==0) tile_status_tx=tile_status_tx+1;
+                    end else if(dut.cpu_instr) cpu_fetch_tx=cpu_fetch_tx+1;
+                    else if(dut.cpu_wstrb==0) cpu_data_read_tx=cpu_data_read_tx+1;
+                    else cpu_data_write_tx=cpu_data_write_tx+1;
+                end
+                if(dut.dma_valid && dut.dma_ready) begin
+                    if(dut.dma_wstrb==0) dma_read_tx=dma_read_tx+1;
+                    else dma_write_tx=dma_write_tx+1;
+                end
+            end
             ext_ready<=0;
             if(ext_valid && ext_ready) begin
                 if(ext_addr!==held_addr || ext_wdata!==held_data ||
@@ -138,6 +174,23 @@ module tb_sobel_soc;
                             32'h40010018: begin
                                 if(ext_wdata!=1 || !ended || output_count!=width*height || tile_count!=expected_tiles)
                                     $fatal(1,"Incomplete image/markers");
+                                if(prof_cycles!=end_cycle-start_cycle ||
+                                   prof_cycles!=cpu_idle_cycles+cpu_fetch_cycles+cpu_mmio_cycles+cpu_data_cycles)
+                                    $fatal(1,"Profile cycle accounting mismatch");
+                                if(ENABLE_SOBEL!=0 && (dma_write_tx!=width*height || tile_start_tx!=expected_tiles))
+                                    $fatal(1,"Tile DMA transaction count mismatch");
+                                if(ENABLE_SOBEL==0 && (dma_read_tx!=0 || dma_write_tx!=0 || tile_start_tx!=0))
+                                    $fatal(1,"Software baseline unexpectedly used DMA");
+                                profile_fd=$fopen("profile.json","w");
+                                if(profile_fd==0)$fatal(1,"Cannot create profile");
+                                $fdisplay(profile_fd,"{\"schema\":1,\"scope\":\"testbench_only\",");
+                                $fdisplay(profile_fd,"\"cycles\":%0d,\"cpu_idle_cycles\":%0d,\"cpu_fetch_cycles\":%0d,",prof_cycles,cpu_idle_cycles,cpu_fetch_cycles);
+                                $fdisplay(profile_fd,"\"cpu_mmio_cycles\":%0d,\"cpu_data_cycles\":%0d,\"cpu_wait_cycles\":%0d,",cpu_mmio_cycles,cpu_data_cycles,cpu_wait_cycles);
+                                $fdisplay(profile_fd,"\"dma_wait_cycles\":%0d,\"tile_busy_cycles\":%0d,",dma_wait_cycles,tile_busy_cycles);
+                                $fdisplay(profile_fd,"\"cpu_fetch_tx\":%0d,\"cpu_data_read_tx\":%0d,\"cpu_data_write_tx\":%0d,",cpu_fetch_tx,cpu_data_read_tx,cpu_data_write_tx);
+                                $fdisplay(profile_fd,"\"mmio_read_tx\":%0d,\"mmio_write_tx\":%0d,\"tile_start_tx\":%0d,\"tile_status_tx\":%0d,",mmio_read_tx,mmio_write_tx,tile_start_tx,tile_status_tx);
+                                $fdisplay(profile_fd,"\"dma_read_tx\":%0d,\"dma_write_tx\":%0d}",dma_read_tx,dma_write_tx);
+                                $fclose(profile_fd);
                                 result_fd=$fopen("execution.json","w");
                                 if(result_fd==0) $fatal(1,"Cannot create execution.json");
                                 $fdisplay(result_fd,"{\"mode\":%0d,\"width\":%0d,\"height\":%0d,\"tile\":%0d,\"memory_wait\":%0d,\"start_cycle\":%0d,\"end_cycle\":%0d,\"cycles\":%0d,\"pixels\":%0d,\"tiles\":%0d}",ENABLE_SOBEL,width,height,tile_size,memory_wait,start_cycle,end_cycle,end_cycle-start_cycle,output_count,tile_count);

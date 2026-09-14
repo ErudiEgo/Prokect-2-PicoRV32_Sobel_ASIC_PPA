@@ -4,7 +4,9 @@
 
 **Nền tảng đã chốt:** OpenLane Classic, SKY130 `sky130A / sky130_fd_sc_hd`. Người dùng chạy simulation và OpenLane; trợ lý chuẩn bị nguồn, kiểm tra tĩnh, phân tích và sửa lỗi.
 
-**Test tiếp theo (2026-09-13):** Shapes 32x32 rồi 64x64, tile16, memory_wait1. RUN `soc_shapes32_00_01` đã PASS: 1024 pixel/4 tile mỗi SW/HW; SW 453421 chu kỳ, HW 613171 chu kỳ (+35,23%). ZIP đã được đối chiếu lại pixel/timestamp/hash, không chạy lại mô phỏng. Còn ba input tiếp theo đã chuẩn bị. Xem [kế hoạch và lệnh](SMALL_IMAGE_TEST_PLAN.md). Hoãn SIPI 256/512.
+**Tile DMA v1 đã có kết quả (2026-09-13):** RUN `soc_shapes32_dma_01` FUNCTIONAL PASS, 1024 pixel/4 tile đúng ở cả SW/HW. SW453421, HW69406 chu kỳ: tăng tốc **6,532879×**, giảm **84,692813%** thời gian tại cùng clock. ZIP/hash/pixel/timestamp đã được đối chiếu lại, không chạy lại simulation. Đây là mốc DMA đầu tiên; sau đó đã kiểm chứng ảnh32/64/128/256 và chạy ASIC RUN12, xem trạng thái ngay dưới. Xem [đánh giá RUN](TILE_DMA_FIRST_RUN_REVIEW.md) và lệnh kiểm chứng ảnh32 thứ hai rồi64.
+
+**Mốc vật lý mới nhất — RUN16:** `picorv32_sobel_dma_clk50_baseline_06` đã hoàn tất81stage, exit0; Antenna/LVS/DRC và setup/hold/slew/cap đạt. Fanout giảm từ62 ở RUN12 xuống **1**, tại `wire45/X` (11tải, giới hạn10: một buffer và mười diode). Collector vẫn `FAIL_OR_INCOMPLETE`; chưa gọi mọi constraint PASS. Có5nhóm WARNING về stage/tool/mô hình, không phải6lỗi độc lập. Khuyến nghị chốt mốc báo cáo phòng thí nghiệm với ngoại lệ công khai, không chạy thêm chỉ để hết WARNING. Xem [đánh giá RUN16](RUN16_REVIEW.md). Bằng chứng final đã export; RUN12 full backup vẫn bảo toàn. Launcher08 đang trỏ tag06 đã tồn tại: **không chạy lại**. [Kế hoạch RUN16](RUN16_REPAIR_PLAN.md) là lịch sử chuẩn bị, [RUN15](RUN15_REVIEW.md) là lịch sử chẩn đoán.
 
 ## Trạng thái ngày 2026-09-12
 
@@ -12,9 +14,9 @@
 
 Đã có RTL tích hợp CPU + Sobel MMIO, hai firmware RV32I, testbench CPU thực thi, checker từng pixel/sự kiện theo vùng và desktop replay. **Người dùng đã chạy `soc_image_smoke_01`: core/MMIO và hai bản CPU đạt kiểm tra chức năng cho ảnh 37 × 35. SW = 573.713 chu kỳ; HW = 774.758 chu kỳ, nhiều hơn 35,04%.** Trợ lý đã đối chiếu lại ZIP, hash, toàn bộ pixel và sự kiện tile mà không chạy lại mô phỏng. Xem [đánh giá simulation](FIRST_RUN_REVIEW.md).
 
-Firmware hiện có SW 1.600 byte và HW 1.416 byte, GCC 13.2.0, RV32I/ILP32 `-O2`. HEX và hash đã kèm trong `firmware/generated`; lần test đầu không cần cài compiler RISC-V. Icarus 12.0 compile được cả hai cấu hình; mỗi cấu hình có hai warning upstream về sensitivity của mảng `cpuregs`. Chưa phải kết quả lint OpenLane.
+Firmware baseline trước Tile DMA có SW 1.600 byte và HW 1.416 byte, GCC 13.2.0, RV32I/ILP32 `-O2`. HEX và hash đã kèm trong `firmware/generated`; lần test đầu không cần cài compiler RISC-V. Icarus 12.0 compile được cả hai cấu hình; mỗi cấu hình có hai warning upstream về sensitivity của mảng `cpuregs`. Chưa phải kết quả lint OpenLane.
 
-Phần ASIC dự kiến tổng hợp là **CPU + Sobel + bus interface**, không gồm program/image RAM ngoài do testbench mô hình hóa. [ARCHITECTURE.md](ARCHITECTURE.md) ghi memory map, phạm vi và phép đo.
+Phạm vi ASIC hiện được tổng hợp là **CPU + Sobel legacy + tile controller/core + bus arbiter**, không gồm program/image RAM ngoài do testbench mô hình hóa. [ARCHITECTURE.md](ARCHITECTURE.md) ghi memory map, phạm vi và phép đo.
 
 **Lịch sử base_01:** ASIC `picorv32_sobel_clk50_base_01` đã chạy, DRC/LVS/XOR sạch nhưng chưa đạt antenna (14 net/15 pin), slew (33), capacitance (8) và fanout (61). Đã sửa cấu hình vật lý và lỗi hiển thị stage trong collector; config/lint/SDC-load bản sửa đã qua precheck. Bản repair_02 sau đó đã chạy; kết quả mới nhất và lệnh repair_04 ở đầu tài liệu. Xem [chẩn đoán base_01](ASIC_BASE01_REVIEW.md). Lint vẫn có 33 ngoại lệ style upstream được ghi nhận; không có checker vật lý nào bị tắt.
 

@@ -18,6 +18,50 @@ RepairDesign = Step.factory.get('OpenROAD.RepairDesignPostGRT')
 RepairTiming = Step.factory.get('OpenROAD.ResizerTimingPostGRT')
 DetailedRouting = Step.factory.get('OpenROAD.DetailedRouting')
 GlobalRouting = Step.factory.get('OpenROAD.GlobalRouting')
+CTS = Step.factory.get("OpenROAD.CTS")
+
+
+@Step.factory.register()
+class CTSWithFanoutMargin(CTS):
+    """Run the original CTS with temporary master-cell fanout headroom."""
+    id = "Sobel.CTSWithFanoutMargin"
+    name = "Clock Tree Synthesis with Fanout Headroom"
+    config_vars = CTS.config_vars + [Variable(
+        "SOBEL_CTS_FANOUT_TARGET", int,
+        "Optimization-only clock-buffer fanout target; final SDC remains unchanged", default=6), Variable(
+        "SOBEL_CTS_BRANCH_BUFFER_DISTANCE", int,
+        "Minimum branch length in microns for an endpoint buffer with CTS spacing enabled", default=1)]
+
+    def get_script_path(self):
+        return str(Path(__file__).with_name("cts_fanout.tcl"))
+
+    def run(self, state_in, **kwargs):
+        kwargs, env = self.extract_env(kwargs)
+        env["SOBEL_SCRIPT_DIR"] = str(Path(__file__).resolve().parent)
+        return super().run(state_in, env=env, **kwargs)
+
+
+@Step.factory.register()
+class RepairDesignSlowCorner(RepairDesign):
+    """Repair the SS electrical limits before the normal multi-corner timing step."""
+    id = "Sobel.RepairDesignSlowCorner"
+    name = "Electrical Design Repair at Slow Corner"
+    config_vars = RepairDesign.config_vars + [Variable(
+        "SOBEL_DESIGN_REPAIR_CORNERS", list[str],
+        "Liberty corner used for this extra electrical repair; signoff corners remain unchanged",
+        default=["max_ss_100C_1v60"]), Variable(
+        "SOBEL_SIGNAL_FANOUT_TARGET", int,
+        "Temporary resizer target reserving fanout budget for diode loads", default=5), Variable(
+        "SOBEL_POST_FANOUT_MARGIN_PCT", int,
+        "Second electrical pass slew/cap optimization margin after fanout buffering", default=70)]
+
+    def get_script_path(self):
+        return str(Path(__file__).with_name("repair_design_fanout.tcl"))
+
+    def run(self, state_in, **kwargs):
+        kwargs, env = self.extract_env(kwargs)
+        env["SOBEL_SCRIPT_DIR"] = str(Path(__file__).resolve().parent)
+        return super().run(state_in, corners_key="SOBEL_DESIGN_REPAIR_CORNERS", env=env, **kwargs)
 
 
 class TargetedDiodes(OdbpyStep):
@@ -162,7 +206,7 @@ class AntennaClosure(CompositeStep):
             if iteration == 3:
                 self.warn('Targeted antenna repair limit reached; remaining violations are retained. Read final checkers; this is not PASS.')
                 break
-            if antenna_only:
+            if antenna_only or self.config["SOBEL_NATIVE_ANTENNA_REPAIR"]:
                 reference = str(folder/'topology_before_native.json')
                 info(f'Native post-DRT round {iteration+1}/3: preserve routed wires, repair antennas incrementally, then DRT and topology check.')
                 run_step(CaptureAntennaTopology, folder/'02-capture-topology', SOBEL_TOPOLOGY_REFERENCE=reference)
@@ -193,3 +237,6 @@ AntennaClosure.config_vars.append(Variable('SOBEL_ANTENNA_ONLY', bool,
 
 AntennaClosure.config_vars.append(Variable("SOBEL_OUTPUT_BUFFER_REPAIR", bool,
     "Insert two reviewed non-inverting output buffers before antenna closure", default=False))
+
+AntennaClosure.config_vars.append(Variable("SOBEL_NATIVE_ANTENNA_REPAIR", bool,
+    "Use native post-DRT antenna repair on the current RUN wires; no parent checkpoint required", default=False))

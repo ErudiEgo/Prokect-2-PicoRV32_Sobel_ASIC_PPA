@@ -161,3 +161,120 @@ Người dùng yêu cầu học cách hỗ trợ OpenLane trong nguồn này. Nh
 - Người dùng đã mở replay soc_shapes32_00_01 và xác nhận hiển thị vùng16x16 phù hợp. Ảnh chụp hiển thị SW453421/HW613171 đúng trace; không sửa số liệu/tốc độ replay để tạo tăng tốc.
 - Source filter HW có ít nhất5 MMIO transactions/pixel (2 data writes, start, status, result), cộng việc CPU lấy pixel/địa chỉ. Core kết thúc cạnh kế sau start; cần giảm overhead giao tiếp.
 - PERFORMANCE_OPTIMIZATION_PLAN.md ghi bước profiling TB theo handshake trước, rồi giảm giao dịch/streaming nếu dữ liệu đo hỗ trợ; giữ baseline32, test64 sau. Chưa sửa RTL/firmware, chưa chạy test mới. Không mặc định dùng lại PPA RUN10 cho phần cứng mới.
+
+## 2026-09-13 — Tile DMA v1 chuẩn bị cho mục tiêu15-20%
+
+- Sau khi người dùng push baseline, triển khai sobel_tile.v + native_bus_arbiter.v. CPU cấu hình vùng; hardware đọc hàng xóm và ghi output RAM; CPU vẫn thực thi firmware và báo tile event. Legacy MMIO/core giữ nguyên.
+- Thêm hai unit TB và profiler quan sát bus. Cùng image32/tile16/memory_wait1, code SW không đổi byte; HW652 byte mới. Không làm chậm SW. Pixel/tile golden checker giữ nguyên.
+- Compile GCC/Icarus, Python/Bash/hash và Verilator lint đạt. Không simulation/Step.start/PNR. Các unit test mới chỉ compile, chưa có PASS thực thi.
+- Lệnh user: bash scripts/03_run_soc_tests.sh soc_shapes32_dma_01 --image inputs/shapes32_00_01 --tile 16 --memory-wait 1; export script04 cùng tag. Chờ số đo, không hứa phần trăm đạt.
+- TILE_DMA_RUN_GUIDE.md ghi ABI, memory arbitration, profiler và giới hạn. Mục tiêu báo cả speedup và mức giảm thời gian ở cùng clock. Hoãn256/512.
+- Config thêm module mới, asic_project.TEST yêu cầu evidence tagdma mới. Không tiếp tục physical checkpoint RUN10 vì RTL khác; PPA mới chưa đo. RAM/profiler/hostGUI vẫn ngoài ASIC.
+
+## 2026-09-13 — Tile DMA RUN32 đầu tiên đã được xác minh
+
+- Người dùng chạy soc_shapes32_dma_01: 4 unit PASS, toàn bộ1024 pixel/4 tile SW/HW PASS. SW453421/HW69406cycles, speedup6.532879, giảm84.692813% tại cùng clock. Host wall11.942/2.671s tách riêng.
+- Đã đọc ZIP, kiểm tra59 hash snapshot/10 trace hashes, firmware, golden từng pixel, tile timestamps và profile. Snapshot nguồn hiện hành khớp; không simulation rerun. Chi tiết/hash ở TILE_DMA_FIRST_RUN_REVIEW.md.
+- Giữ RTL, test tiếp soc_shapes32_dma_02 với inputs/shapes32_01_01, rồi soc_shapes64_dma_01 với inputs/shapes64_00_01, tile16/memory_wait1. Người dùng chạy và export script04.
+- Mục tiêu15-20% đạt trên ảnh đầu; cần mở rộng bộ kiểm chứng. Physical checks/PPA của DMA chưa chạy, không kế thừa PASS/PPA RUN10.
+
+## Test256 thử trước bộ ảnh chính thức
+
+- Người dùng yêu cầu thử một ảnh256. Chuẩn bị inputs/sipi_chart256_dma_01 từ images/5.1.13.tiff, bytecheck65536pixel nguyên vẹn. Không đổi RTL/firmware, không simulation.
+- Lệnh và hash trong TEST_256_DMA_GUIDE.md: RUN soc_sipi_chart256_dma_01, tile16/memory_wait1/timeout3600s; watchdog100M giữ nguyên. Người dùng copy/chạy/export.
+- RUN64 log người dùng: FUNCTIONAL PASS, SW1822739/HW281750cycles, speedup6.469349, 4096pixels/16tiles; ZIP đã xuất. Chưa dùng làm PPA.
+
+## Bàn giao sau RUN256 — tạm dừng theo yêu cầu người dùng
+
+- Người dùng yêu cầu để công việc phát triển sang phiên sau; không chạy thêm test hoặc sửa RTL/firmware trong phiên nhận kết quả.
+- RUN soc_sipi_chart256_dma_01: log và SUMMARY trong ZIP xác nhận FUNCTIONAL TEST PASS, 65536pixel/256tile mỗi SW/HW. SW29435845/HW4565534cycles, speedup6.447405, giảm84.490% tại cùng clock. Host SW681.066s/HW111.858s; không phải thời gian chip.
+- DMA521220 reads/65536 writes/256starts. RUN hoàn tất, không gặp timeout/watchdog theo log. Windows reports/soc_sipi_chart256_dma_01.zip đã tồn tại. Phiên này mới đối chiếu log/SUMMARY và hash ZIP, chưa kiểm tra lại toàn bộ pixel/hash snapshot của RUN256.
+- Cần làm phiên sau: audit ZIP256 (và ZIP32_dma_02/64_dma_01 chưa được audit toàn bộ ở các phiên nhận log); chuẩn bị SW optimized làm đối chứng, giữ nguyên baseline; chờ bộ ảnh32/64/128/256 người dùng chuẩn bị, xác định preprocessing thống nhất và test kích thước lẻ/memory_wait khác; sau chức năng ổn chuẩn bị full OpenLane cho RTL DMA.
+- Kết quả hiện so với SW C baseline -O2 RV32I, chưa chứng minh tối ưu SW tốt nhất. RGB chuyển gray trên host, ngoài thời gian đo. Không gán PPA/physical PASS của repair_10 cho DMA mới; ASIC DMA NOT_RUN. RUN10 vẫn còn27fanout violations.
+- Không xóa/ghi đè RUN cũ, không tự chạy simulation/OpenLane. Reports/runs/run_inputs ngoài Git; bằng chứng phải backup riêng. Input SIPI256 cũng ngoài allowlist Git, giữ riêng.
+- SHA256 ZIP256: 23c4b08390e8af2bc1f288f0d3dfbee25b5985dd6529beae2dbff09d799bb1f9
+
+
+## Hướng dẫn bộ ảnh chuẩn và watchdog512
+
+- Bộ test image có43ảnh, thư mục32/64/128/256/512 đúng kích thước. STANDARD_IMAGE_TEST_COMMANDS.md có lệnh chuẩn bị/chạy/export/replay cho5size và2ảnh128 A/B cụ thể. Ảnh gốc giữ nguyên, RGB chuyểnL8bit host ngoài thời gian đo.
+- Đã thêm --max-cycles runner/plusarg TB, mặc định100M, giới hạn1..2tỷ, ghi config/command và áp dụng chung SW/HW. Lệnh512 chọn250M/7200s mỗi subprocess. Không đổi RTL/firmware/golden/cycle interval; Icarus/static PASS. Không simulation.
+- Input được người dùng tạo trong Ubuntu, kết quả reports/RUN và ZIP; script04 xuấtZIPWindows. Các input mới ngoài Git và nằm trong snapshotZIP. Không tự động chạy cả bộ.
+
+## Chốt nền tảng báo cáo trước nâng cấp
+
+- Người dùng yêu cầu RUN mới toàn bộ hiện trạng, từ đầu không kế thừa, rồi mở OpenROAD kiểm tra. Chuẩn bị picorv32_sobel_dma_clk50_baseline_01, launcher08 cố định khôngparent. Chưa chạy flow.
+- Pin nền tảng grayscaleDMA hiện tại/clock50ns, tạm hoãn RGB và SWoptimized đến sau baseline. Liên kết4ZIP chuẩn32/64/128/256 khớp RTL/TB/firmware.
+- Native antenna repair được chọn trên chính DRT mới qua flagSOBEL_NATIVE_ANTENNA_REPAIR; không bật continuation/oldpinECO. Allchecker giữ nguyên.
+- Collector bảo toàn tất cả finalviews trongarchive. Viewer09 đọcfinalODB bằngDockerimage đãpin, mountreadonly; không chạy physicalflow. Guide ASIC_DMA_BASELINE_GUIDE.md.
+
+- Precheck build/asic_precheck_T8ZiVbjU PASS; freezeaudit4ZIP/hash/no-parent PASS; readfinalODB cũ bằng OpenROAD -exit PASS. Không physicalflow chạy. User next: copy script00, cdUbuntu, bash scripts/08_run_report_baseline.sh, collect07. Saufinal dùngviewer09 theo guide.
+
+## Kết quả baseline01 và mở layout RUN chưa PASS
+
+- Người dùng chạy full baseline01 đến81/81; exit2. Antenna0/0, LVS/DRC PASS, setup sạch; lỗi hold/slew/cap tại max_ss_100C_1v60. Metrics global slew11/cap1/fanout65. Chưa chốt baselinePASS.
+- Không có final/. State79-misc-reportmanufacturability tham chiếu ODB57-odb-cellfrequencytables/picorv32_sobel_soc.odb, saufill/routing. StageGDS61-magic-streamout có tham chiếu trongstate.
+- Viewer09 bổ sung --latest-state rõ ràng cho incompleteRUN: lấyODB đúngstatecuối, chỉ trongRUN yêu cầu, ghihash/nguồn và nhãnSTAGE VIEW; projectread-only. Không sửa snapshot cũ. Hai fileviewerđã đồng bộ sangUbuntu.
+- OpenROAD GUI đãkhởi chạy vàlog xác nhận ODBloaded; khôngflow rerun. Lệnh mởlại: bash scripts/09_open_final_openroad.sh picorv32_sobel_dma_clk50_baseline_01 --latest-state.
+- Evidence userexport: reports/picorv32_sobel_dma_clk50_baseline_01_collect_20260913T103147143862Z.tar.gz. Tiếp theo chẩn đoán chínhxácpath/net/corner, chuẩn bịbaseline02 FULL từđầu nếu sửa; giữbaseline01.
+
+## Baseline02 sửa lỗi điện, vẫn full từ đầu
+
+- RUN01: hold2inputpaths ext_rdata[2]/[0], −14.998/−8.628ps tại maxSS; slew11entriescùngfanout26(buf_1), cap85.686fF>81.492fF. Không bằngchứng lỗi thuậttoán hoặc toolchạysai.
+- Bản02: postGRT holdmargin0.2ns; slew/cap optimization margins55%; extraRepairDesignSlowCorner trước multi-cornertiming để targetmaxSS riêng. Signoff9corner/clock/SDC/checker/RTL/firmware/nativeantenna khôngđổi. Fanout65RUN01chưađượcchứngminh đãsạch.
+- Launcher08chọnpicorv32_sobel_dma_clk50_baseline_02, khôngparent. GuideASIC_DMA_BASELINE_GUIDE.mdcậpnhật. PrecheckMXXQeUvAPASS; chưa physicalRUN02. Usercopy00/chạy08/collect07tag02.
+
+## RUN12 / baseline02 — kết quả nhận, tạm dừng theo người dùng
+
+- Tên chính xác picorv32_sobel_dma_clk50_baseline_02. Log exit0, Flowcomplete81/81, finalviews đã xuất; Antenna/LVS/DRC, setup/hold/slew/cap PASS.
+- Collector vẫn FAIL_OR_INCOMPLETE; fanout metric=62. Không gọi tất cả tiêu chí sạch. Phiên sau audit đầy đủ archive và các check/giới hạn còn thiếu, tổng hợp PPA.
+- ArchiveWindows reports/picorv32_sobel_dma_clk50_baseline_02_collect_20260913T110947807320Z.tar.gz đã có. Giữ RUN12 và snapshots, không chạy lại hoặc sửa trong phiên nhận kết quả.
+- Mở OpenROAD final bằng: bash scripts/09_open_final_openroad.sh picorv32_sobel_dma_clk50_baseline_02. Không cần --latest-state vì đã cófinalODB. Người dùng yêu cầu lệnh, chưa tự mở GUI lần này.
+
+## Lưu RUN12 và chuẩn bị fanout — 2026-09-13
+
+- User yêu cầu bảo toàn RUN12 trước khi sửa62fanout. Đã lưu full archive1565file/406417999byte, đối chiếu từngSHA256; xem RUN12_PRESERVATION_AND_FANOUT.md.
+- baseline_02 là RUN12: exit0/Ant/LVS/DRC/setup/hold/slew/cap đạt, fanout62. Không gọi fullsignoff.
+- ODB xác định23clock từCTS và39signal códiode sauDRT/antenna closure.
+- baseline_03 là RUN13, full từđầu. CTS native có wrapper đặt mục tiêu cell6; extra SS repair đặt mục tiêu design5 trước diode. Trảvề giới hạn10 trước lưu/timing; SDC/RTL/firmware/checker khôngđổi.
+- Trợ lý chỉ config/lint/API/SDC/mock checks; người dùng chạyflow để xác nhận tác động fanout/timing/antenna/PPA. Không tiếp tục checkpoint của RUN12.
+
+## RUN13 lỗi bootstrap; chuẩn bị RUN14
+
+- baseline_03 exit1 đầu CTS34: SOBEL_SCRIPT_DIR nằm trong `_env.tcl` nhưng wrapper chưa source. Stage33 là state hoàn tất cuối. Archive user đã collect, giữ nguyên.
+- Sửa hai wrapper CTS/postGRT bằng source `_TCL_ENV_IN` trước biến custom. Không đổi RTL/firmware/config/SDC/fanout targets hoặc checker.
+- Thêm regression dùng OpenLane `_reroute_env` thật và upstream stub: bản cũ tái hiện lỗi, bản sửa cả2wrapper PASS. Không gọi CTS/resizer/Step.start.
+- Precheck PeAmhKU6 PASS; nguồn chức năng khớp bốn ZIP benchmark. RUN14 baseline_04 chạy81steps từ đầu qua08, collect07baseline_04. Chưa physicalPASS mới.
+
+## RUN14 lỗi chọn cell; chuẩn bị RUN15 — 2026-09-14
+
+- baseline_04 exit1 đầuCTS34: mỗi clock buffer có4STAobject cùngtên sau nạp3Libertycorner. Chưa chạyCTS. Guard cũ đòi1object là lỗi wrapper của trợ lý.
+- Chọn chính xácSTAcell liên kết với ODB master.staCell, kiểm thêmname/library; không chọnfirstmatch. Fixture readLEF/link_design có5candidate cũng được xử lý đúng.
+- Precheck d2Icy7F6 PASS config/lint/SDC/API/env/multi-corner real-library tests. Thử readonly actualODB/SDC/Liberty RUN14 cũng PASS lựa chọn4clockmasters, CTSdelegate stub; khôngphysicalflow.
+- RUN15 baseline_05 full81steps từđầu qua08; collect07baseline_05. Không đổiRTL/firmware/config/SDC/fanouttarget/checker; bảo toàn RUN12/13/14.
+
+## Đánh giá RUN15 thực tế — 2026-09-14
+
+- baseline_05 đi hết81step, exit2; Antenna/LVS/DRC/setup/holdPASS. Fanout4 (từ62), slew20/cap8 (từ0), instancearea193493µm² (RUN12=172005). Chưa chấp nhận làm baseline cuối.
+- 4fanout làclock clkbuf_2_[0..3]_0_clk/X, mỗi16tải;5clockdrivers lỗi cap. 20slew thuộc3net tín hiệu fanout4485/net4662,fanout4549/net4726,_12538_/_07482_, có1/5/2diode cuối. STA59maxSS là nguồn lỗiđiện.
+- Giữ RUN12đãbackup và RUN15thửnghiệm. Không hứa xóa mọiWARNING; khôngtắtchecker/nớiSDC. Xem RUN15_REVIEW.md.
+- Phiên này đánh giá bằng actualreport/ODBread-only; không sửaconfig/RTL, không chạyflow, chưa chuẩn bịRUN16. Launcher08vẫn tag05đãtồn tại, tránh chạy lại.
+
+## Chuẩn bị RUN16 theo yêu cầu chốt sạch — 2026-09-14
+
+- baseline_06 full81steps từ đầu qua08, chưa physicalrun. Giữ mọiRUNcũ/RUN12backup.
+- CTSspacing80µm, nativebranching_point_buffers_distance1µm; giữ targetfanout6 để tránh tầng2lái16tải ởtầng6.
+- ExtraSSrepair2lượt:55%rồi70%slew/capmargin, fanout5 phục hồi10 kểcảlỗi. NativeGRT/DPL/timing/antenna/chếđộsignoffgiữnguyên.
+- Precheck CvJfVKaZ PASS: config/lint/SDC/API/env/master/regressions, installedCTS Tclparser vớiC++engine stub. Khôngflow/simulation.
+- Warnings nguồnPDK, VSRC, wirelength chưa cóthreshold đượcgiảithíchtrongRUN16_REPAIR_PLAN.md; khôngchelog hoặc bỏchecker. Chưa hứaPASS hoặc sốWARNINGgiảm.
+
+
+## RUN16 đã chạy — đánh giá khả năng chốt 2026-09-14
+
+- User hỏi có đáng sửa hết WARNING không; chưa yêu cầu RUN17. Đã đọc báo cáo thật/ODB/LEF, không simulation hoặc physical flow.
+- baseline_06 exit0, full81stage, Antenna/LVS/DRC/setup/hold/slew/cap PASS; fanout1 khiến collector FAIL_OR_INCOMPLETE. Instance area195012µm². Không gọi sạch toàn bộ.
+- wire45/X buf8/net1746 trước DRT chỉ có fanout4272/A; sau DRT có thêm10diode ANTENNA_547..556, tổng11>10. Không xóa diode/nới giới hạn/tắt checker. Chèn buffer hay đổi routing có thể xử lý nhưng phải tái kiểm tra, chưa được thực nghiệm.
+- 5nhómWARNING: GRT giữa flow, LEF58 parser, WireLength chưa ngưỡng, VSRC thiếu mô hình, 2output thiếu diffusion. LEF và ODB xác nhận ext_addr[0:1] là hai output thiếu diffusion, được tieLO conb1. Không bỏ hở; không bịa antenna data.
+- Đề xuất chốt RUN16 làm baseline phòng thí nghiệm có ngoại lệ fanout1 và giới hạn kiểm tra; không hứa fullsignoff. Chưa chuẩn bị RUN17. RUN16_REVIEW.md lưu bằng chứng và phân tích khả thi, README cập nhật; RTL/config/SDC/scripts không đổi trong phiên này.
+- Archive final hiện có reports/picorv32_sobel_dma_clk50_baseline_06_collect_20260914T045526219194Z.tar.gz, SHA256620ba7d4dbde97777013e0748a4018863344fdc91d0fb0d557a38603ab2568a0. Đây không phải backup toàn bộ stageODB; các stage vẫn ở Ubuntu. RUN12 fullbackup còn nguyên.
+- Launcher08 trỏ tag06 đã tồn tại, không chạy lại. Viewer09 mở final tag06 mà không chạy flow. Bước tiếp theo đề xuất: bảo toàn bằng chứng, tổng hợp PPA/utilization/benchmark theo phạm vi RAM ngoài, power vectorless, IR indicative đã ghi.

@@ -144,7 +144,7 @@ def collect(tag):
     checks["final_metrics"] = "PASS" if final.is_file() else MISSING
     checks["flow_exit_zero"] = "PASS" if runtime.get("openlane_exit_status") == "0" else "FAIL/INCOMPLETE"
     checks["final_gds"] = "PASS" if gds else MISSING
-    checks["cts_completed"] = "PASS" if (any(s.name.endswith("-openroad-cts") and (s/"state_out.json").is_file() for s in stages)
+    checks["cts_completed"] = "PASS" if (any(s.name.endswith(("-openroad-cts", "-sobel-ctswithfanoutmargin")) and (s/"state_out.json").is_file() for s in stages)
         or (resume_valid and (resume_dir/"parent_cts_state.json").is_file())) else MISSING
     if resume is not None: checks["resume_checkpoint_integrity"] = "PASS" if resume_valid else "FAIL"
     checks["physical_clock"] = "PASS" if resolved.get("CLOCK_PORT")=="clk" and resolved.get("RUN_CTS") is True else MISSING
@@ -197,7 +197,7 @@ def collect(tag):
             if p.is_file(): tar.add(p,arcname=p.relative_to(ROOT))
         for p in sorted(run.rglob("*")):
             if p.is_file() and (p.suffix.lower() in (".json",".log",".rpt",".txt",".sdc",".csv",".gds") or
-                               ("final" in p.relative_to(run).parts and p.suffix.lower() in (".gds",".lef"))):
+                               ("final" in p.relative_to(run).parts)):
                 tar.add(p,arcname=p.relative_to(ROOT))
         console = ROOT/"reports"/(tag+"_console.log")
         if console.is_file(): tar.add(console,arcname=console.relative_to(ROOT))
@@ -211,7 +211,7 @@ def collect(tag):
     print("\n".join(summary[:9]))
     print("SUMMARY:",out/"SUMMARY.txt")
     print("ARCHIVE:",archive)
-    print("No flow or simulation was rerun. Full ODB/netlists remain in the Ubuntu RUN.")
+    print("No flow or simulation was rerun. All final views (including available ODB/netlists/SPEF) are archived; stage files remain in Ubuntu.")
 
 
 if __name__ == "__main__":

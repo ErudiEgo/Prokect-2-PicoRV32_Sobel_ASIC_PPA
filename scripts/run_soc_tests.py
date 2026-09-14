@@ -74,6 +74,10 @@ def execute(out):
              "TEST PASS: sobel_core 1283 vectors; latency, busy, done, reset checked"),
             ("tb_sobel_mmio", ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "tb/tb_sobel_mmio.sv"],
              "TEST PASS: sobel_mmio register, handshake, arithmetic, error and reset checks"),
+            ("tb_sobel_tile", ["rtl/sobel_core.v", "rtl/sobel_tile.v", "tb/tb_sobel_tile.sv"],
+             "TEST PASS: sobel_tile borders, partial tiles, byte lanes, stalls, busy protection and reset"),
+            ("tb_native_bus_arbiter", ["rtl/native_bus_arbiter.v", "tb/tb_native_bus_arbiter.sv"],
+             "TEST PASS: native_bus_arbiter contention, backpressure, ownership and reset"),
         ):
             directory = out / top
             directory.mkdir()
@@ -85,7 +89,7 @@ def execute(out):
                 raise ValueError(f"Missing completion assertion: {top}")
         expected = golden(pixels, w, h)
         modes = {}
-        sources = ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "rtl/picorv32_sobel_soc.v",
+        sources = ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "rtl/sobel_tile.v", "rtl/native_bus_arbiter.v", "rtl/picorv32_sobel_soc.v",
                    "third_party/picorv32/picorv32.v", "tb/tb_sobel_soc.sv"]
         for index, mode in enumerate(("sw", "hw")):
             directory = out / mode
@@ -98,22 +102,35 @@ def execute(out):
                 f"+firmware_bytes={firmware['images'][mode]['bytes']}",
                 f"+image={ROOT / 'image/image.hex'}", f"+width={w}", f"+height={h}",
                 f"+tile={cfg['tile']}", f"+memory_wait={cfg['memory_wait']}",
+                f"+max_cycles={cfg['max_cycles']}",
                 *(["+vcd"] if cfg["vcd"] else [])], directory, "simulation", cfg["timeout_seconds"], commands)
             modes[mode] = verify_mode(directory, index, w, h, cfg["tile"], cfg["memory_wait"], expected)
             modes[mode]["simulation_wall_seconds"] = elapsed
+            profile = json.loads((directory / 'profile.json').read_text())
+            if profile['cycles'] != modes[mode]['cycles'] or profile['cycles'] != sum(profile[k] for k in
+                    ('cpu_idle_cycles','cpu_fetch_cycles','cpu_mmio_cycles','cpu_data_cycles')):
+                raise ValueError('Profile cycle partition mismatch')
+            if profile['dma_write_tx'] != (w*h if index else 0) or profile['tile_start_tx'] != (modes[mode]['tiles'] if index else 0):
+                raise ValueError('Profile DMA write/start counts mismatch')
+            modes[mode]['profile'] = profile
+            print(f"PROFILE: {mode} DMA reads={profile['dma_read_tx']} writes={profile['dma_write_tx']} tile starts={profile['tile_start_tx']}", flush=True)
+
             print(f"PIXEL CHECK PASS: {mode}, {w*h} pixels, all tile events verified", flush=True)
         result.update(status="PASS", width=w, height=h, modes=modes,
                       sw_cycles_div_hw_cycles=modes["sw"]["cycles"]/modes["hw"]["cycles"],
-                      scope="RTL simulation only; CPU instructions execute in both variants",
+                      scope="RTL simulation only; CPU executes both firmware variants; HW tile DMA reads/writes external RAM",
+                      accelerator=cfg["accelerator"],
+                      time_reduction_vs_sw_pct=100*(1-modes["hw"]["cycles"]/modes["sw"]["cycles"]),
                       clock_note="Cycles only. TB clock is not an ASIC timing result.")
         # Bind playback to the exact verified traces. No preview data is invented.
         result["evidence_sha256"] = {str(p.relative_to(out)).replace(os.sep,"/"): sha(p)
             for mode in ("sw", "hw") for p in (out / mode).iterdir()
-            if p.name in ("pixels.csv", "tiles.csv", "execution.json", "output.pgm")}
+            if p.name in ("pixels.csv", "tiles.csv", "execution.json", "output.pgm", "profile.json")}
         save(out / "comparison.json", result)
         summary = (f"FUNCTIONAL TEST PASS: {out.name}\nImage: {w} x {h}; tile={cfg['tile']}; memory_wait={cfg['memory_wait']}\n"
                    f"SW cycles: {modes['sw']['cycles']}\nHW cycles: {modes['hw']['cycles']}\n"
                    f"SW/HW cycles: {result['sw_cycles_div_hw_cycles']:.6f} (greater than 1 means faster HW)\n"
+                   f"Time reduction vs SW at equal clock: {result['time_reduction_vs_sw_pct']:.3f}% (target >=15%, preferred >=20%)\n"
                    f"SW simulator wall seconds: {modes['sw']['simulation_wall_seconds']:.3f}\n"
                    f"HW simulator wall seconds: {modes['hw']['simulation_wall_seconds']:.3f}\n"
                    "Both outputs match independent 3x3 convolution, every pixel and tile event checked.\n"
@@ -141,12 +158,15 @@ def main():
     p.add_argument("--tile", type=int, default=32)
     p.add_argument("--memory-wait", type=int, default=1)
     p.add_argument("--timeout-seconds", type=int, default=600, help="Per subprocess wall-clock timeout")
+    p.add_argument("--max-cycles", type=int, default=100000000, help="Total cycle watchdog per CPU variant; same limit for SW/HW")
     p.add_argument("--vcd", action="store_true")
     a = p.parse_args()
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", a.run):
         p.error("Unsafe RUN name")
     if not 1 <= a.tile <= 64 or not 0 <= a.memory_wait <= 100 or a.timeout_seconds < 1:
         p.error("Invalid tile/memory wait/timeout")
+    if not 1 <= a.max_cycles <= 2000000000:
+        p.error("max-cycles must be 1..2000000000")
     for tool in ("iverilog", "vvp"):
         if not shutil.which(tool):
             p.error(f"Missing {tool}; install Icarus Verilog in Ubuntu")
@@ -163,8 +183,9 @@ def main():
     for name in ("README.md", "AGENTS.md", "OPENLANE_WORKFLOW_NOTES.md", "ARCHITECTURE.md"):
         shutil.copy2(ROOT / name, frozen / name)
     shutil.copytree(a.image, frozen / "image")
-    cfg = {"run": a.run, "tile": a.tile, "memory_wait": a.memory_wait,
-           "vcd": a.vcd, "timeout_seconds": a.timeout_seconds, "source_image": str(a.image.resolve())}
+    cfg = {"accelerator": "tile_dma_v1", "run": a.run, "tile": a.tile, "memory_wait": a.memory_wait,
+           "vcd": a.vcd, "timeout_seconds": a.timeout_seconds, "max_cycles": a.max_cycles,
+           "source_image": str(a.image.resolve())}
     save(out / "run_config.json", cfg)
     save(out / "inputs.sha256.json", {p.relative_to(frozen).as_posix(): sha(p) for p in sorted(frozen.rglob("*")) if p.is_file()})
     try:

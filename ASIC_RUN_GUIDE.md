@@ -1,5 +1,8 @@
 # Chạy ASIC PicoRV32 + Sobel — OpenLane Classic
 
+**Cập nhật 2026-09-13:** bản Tile DMA đã được triển khai và compile/lint, chưa chạy simulation. Bước hiện tại là `soc_shapes32_dma_01` theo [TILE_DMA_RUN_GUIDE.md](TILE_DMA_RUN_GUIDE.md). Các lệnh/diễn giải baseline dưới đây là lịch sử; chưa chạy OpenLane cho bản mới.
+
+
 Chuẩn bị ngày 2026-09-12. Đây là bước chạy vật lý sau khi người dùng hoàn tất simulation `soc_image_smoke_01`.
 
 **RUN `repair_09` đã PASS Antenna, LVS và DRC; còn lỗi slew/cap và fanout.** RUN mới `picorv32_sobel_clk50_repair_10` tiếp tục checkpoint RUN 9, thêm hai buffer không đảo ở hai driver lỗi tải, rồi kiểm tra antenna và toàn bộ kiểm tra cuối. Chưa có kết quả RUN 10. Xem [chẩn đoán và phạm vi sửa](ASIC_REPAIR09_REVIEW.md).

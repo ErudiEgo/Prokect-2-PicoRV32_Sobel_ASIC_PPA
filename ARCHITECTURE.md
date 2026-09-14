@@ -1,5 +1,7 @@
 # Kiến trúc và phạm vi đo — mốc kiểm chứng CPU
 
+**Cập nhật 2026-09-13:** Tile DMA v1 đang ở mức compile/lint, chưa simulation/PNR. Xem [ABI và quy trình mới](TILE_DMA_RUN_GUIDE.md). RUN10 là kiến trúc cũ.
+
 Cập nhật 2026-09-12. Người dùng đã chạy simulation soc_image_smoke_01: ảnh SW/HW đúng từng pixel; đã có kết quả ASIC base_01 nhưng chưa đạt đủ checker; xem ASIC_BASE01_REVIEW.md. Chi tiết tại FIRST_RUN_REVIEW.md.
 
 ## Phần cứng
@@ -60,10 +62,10 @@ Core nhận 8 hàng xóm, bỏ pixel giữa; Gx/Gy signed 11 bit, tổng độ l
 
 - GCC RV32I/ILP32, `-O2`, cùng source với `USE_ACCEL=0/1`. Host không xử lý ảnh thay CPU.
 - Ảnh từ 1 đến 512 pixel mỗi chiều; tile từ 1 đến 64, mặc định 32. Không tự resize.
-- CPU duyệt tile theo hàng rồi duyệt pixel trong tile, đọc 8 hàng xóm từ bộ nhớ ngoài cho mỗi pixel; không lưu toàn tile vào RAM nội bộ.
+- SW CPU duyệt pixel theo từng tile. HW CPU cấu hình tile; engine DMA duyệt pixel và đọc8 hàng xóm từ RAM ngoài, không lưu toàn tile vào RAM nội bộ.
 - Ngoài biên **toàn ảnh** lấy 0. Qua ranh giới tile vẫn lấy pixel thật từ vùng bên cạnh.
 - Kernel Gx=[-1,0,1;-2,0,2;-1,0,1], Gy=[-1,-2,-1;0,0,0;1,2,1]. Output=`min(255,abs(Gx)+abs(Gy))`.
-- SW tính số học trên CPU. HW đóng gói pixel, ghi MMIO, chờ done, đọc result. Cả hai ghi từng byte output và gửi tile event sau khi hoàn tất vùng.
+- SW tính số học trên CPU. HW cấu hình một descriptor mỗi tile, chờ done; DMA ghi từng byte output. CPU gửi tile event sau khi cả vùng đã ghi xong. Legacy MMIO từng pixel vẫn được giữ.
 - Demo 37 × 35 là đầu vào tự tạo, có 4 tile với tile=32, gradient thấp, cực trị, đường qua x/y=32 và vùng cuối thiếu kích thước. Không phải output giả lập sẵn.
 
 Compiler có thể tạo instruction khác nhau cho hai đường xử lý. Đây là phép đo ứng dụng từ cùng source và mức tối ưu; không hứa HW nhanh hơn. Chi phí truyền pixel/MMIO có thể lấn át số học tiết kiệm được. Số liệu đầu tiên sẽ quyết định có cần gom nhiều pixel hoặc thêm line buffer.
@@ -72,7 +74,7 @@ Compiler có thể tạo instruction khác nhau cho hai đường xử lý. Đâ
 
 RUN đóng băng RTL, vendor/giấy phép, firmware, checker và input; compiler/simulator/checker dùng bản sao đó. Hash liên kết HEX với C/assembly/linker; hash toàn snapshot ở `inputs.sha256.json`.
 
-`pixels.csv` ghi cycle,x,y,value tại cạnh CPU chấp nhận store. `tiles.csv` ghi cycle,x,y,width,height,ordinal tại cạnh CPU chấp nhận tile event. Python đối chiếu **từng pixel** với phép tích chập độc lập, kiểm tra số lượng/vị trí, thứ tự tile, vùng cuối và timestamps. Chỉ sau khi kiểm chứng mới tạo `comparison.json` PASS và `output.pgm`.
+`pixels.csv` ghi cycle,x,y,value tại cạnh bus RAM chấp nhận store của CPU (SW) hoặc DMA (HW). `tiles.csv` ghi cycle,x,y,width,height,ordinal tại cạnh CPU chấp nhận tile event. Python đối chiếu **từng pixel** với phép tích chập độc lập, kiểm tra số lượng/vị trí, thứ tự tile, vùng cuối và timestamps. Chỉ sau khi kiểm chứng mới tạo `comparison.json` PASS và `output.pgm`.
 
 Khoảng đo từ store start-marker được chấp nhận đến store end-marker được chấp nhận: bao gồm đọc ảnh, tính toán, MMIO, polling, ghi output và tile events. Không gồm boot/ID check ban đầu, host đọc file/golden/replay. Thời gian host chạy `vvp` lưu riêng bằng monotonic clock, không gọi là thời gian chip.
 
@@ -82,6 +84,6 @@ Replay Tkinter đọc trace thật đã PASS, kiểm tra hash, hiện tile khi t
 
 ## Cổng sang ASIC
 
-Đã có bằng chứng simulation; đã xác minh OpenLane Classic 2.3.10 và SKY130 revision, chuẩn bị clock thử 50 ns, I/O constraints và script đóng băng/chạy/collect. Base_01 và repair_02 đã chạy; repair_02 còn antenna 7/7, slew 48, cap 5, fanout 338. repair_03 đã chạy: antenna 6/7, slew 668, cap 67, fanout 60. Đang giao repair_04 Classic 81 bước với sửa diode theo pin thực tế; chưa có kết quả vật lý repair_04. Người dùng tiếp tục theo ASIC_RUN_GUIDE.md. Clock/IO là mục tiêu và giả định phòng thí nghiệm, chưa phải timing đạt trên netlist/layout.
+Baseline RUN10 đã có báo cáo vật lý, còn fanout27. Tile DMA đổi RTL nên cần simulation mới và một RUN vật lý đầy đủ mới sau khi đánh giá chức năng/tốc độ. Không kế thừa PPA/checker PASS từ RUN10. Chưa chạy ASIC bản Tile DMA.
 
 Báo actual timing theo corner, cell/core/die area và utilization, power cùng nguồn hoạt động/giả định, IR drop cùng nguồn/tải, DRC/LVS/antenna và kiểm tra điện. Mục tiêu antenna 0 nets/0 pins và DRC/LVS PASS; thiếu báo cáo hoặc checker chưa chạy ghi NOT_RUN/MISSING. Không tắt checker để có PASS.

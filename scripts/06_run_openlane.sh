@@ -33,6 +33,11 @@ docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e PYTHONDONTWRITEBYTECO
     check-openlane "/work/run_inputs/$TAG/config.frozen.json" /audit \
     2>&1 | tee "$CHECK/precheck.log"
 cp -a "$CHECK" "$SNAPSHOT/frozen_precheck"
+if [[ -z "$PARENT" ]]; then
+    [[ ! -e "$SNAPSHOT/resume_checkpoint" ]] || { echo 'Unexpected checkpoint in fresh RUN' >&2; exit 1; }
+    printf '{"mode":"full_from_start","parent_run":null,"initial_state":null}\n' > "$SNAPSHOT/execution_plan.json"
+    printf 'FULL RUN FROM START: no parent, no initial state, no skipped prefix.\n'
+fi
 START=$(date +%s)
 printf 'start_epoch=%s\nstatus=RUNNING\n' "$START" > "$SNAPSHOT/runtime.txt"
 finish() {
