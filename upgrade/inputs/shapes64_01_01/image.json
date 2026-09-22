@@ -1,0 +1,12 @@
+{
+  "kind": "INPUT_ONLY",
+  "width": 64,
+  "height": 64,
+  "hex_sha256": "137693363f2cdbd59640dca5013d476f54e0b12c619a082a316f64ee47c7afa5",
+  "provenance": {
+    "source_name": "shape_01_label_1_64x64.png",
+    "source_sha256": "c351b25b5508e4a3ec036b63a2b38e5453e91b337bd235043e242c3010e4a009",
+    "conversion": "Pillow RGB then L; no resize/EXIF rotation",
+    "pillow_version": "12.3.0"
+  }
+}

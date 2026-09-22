@@ -1,0 +1,12 @@
+{
+  "kind": "INPUT_ONLY",
+  "width": 1,
+  "height": 7,
+  "channels": 3,
+  "layout": "planar_RGB",
+  "hex_sha256": "2bce6d937cd9e9e3f36672f3abf96969c260b81eb77d536cd61f79ae0db84458",
+  "provenance": {
+    "generator": "prepare_m2_inputs.py",
+    "formula": "(i*37+channel*71+13)%256"
+  }
+}

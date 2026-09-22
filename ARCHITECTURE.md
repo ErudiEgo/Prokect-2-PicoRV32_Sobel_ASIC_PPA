@@ -1,3 +1,9 @@
+# RGB extension on RUN16 hardware
+
+Current branch adds sequential per-channel RGB firmware, testbench/evidence and replay; synthesizable RTL remains RUN16. See [RGB_RUN_GUIDE.md](RGB_RUN_GUIDE.md) for the current ABI, memory limits and commands. Config word 0xf00c selects 1 or 3 channels. Input/output remain within the existing 256 KiB windows: RGB <=256x256, gray <=512x512. CPU emits one tile event after all channels. RGB32 functional evidence is now PASS (see RGB32_FIRST_RUN_REVIEW.md); new RGB PPA is NOT_RUN.
+
+The text below records the original grayscale architecture and historical development stages.
+
 # Kiến trúc và phạm vi đo — mốc kiểm chứng CPU
 
 **Cập nhật 2026-09-13:** Tile DMA v1 đang ở mức compile/lint, chưa simulation/PNR. Xem [ABI và quy trình mới](TILE_DMA_RUN_GUIDE.md). RUN10 là kiến trúc cũ.

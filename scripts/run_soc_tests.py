@@ -12,6 +12,7 @@ import time
 import traceback
 
 from evidence import sha, validate_firmware, load_image, golden, verify_mode
+from run16_basis import validate_run16_rtl
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -61,9 +62,11 @@ def execute(out):
         for name, digest in hashes.items():
             if sha(ROOT / name) != digest:
                 raise ValueError(f"Frozen input changed: {name}")
+        save(out / "run16_rtl_basis.json", validate_run16_rtl(ROOT))
         firmware = validate_firmware(ROOT)
         meta, pixels = load_image(ROOT / "image")
         w, h = meta["width"], meta["height"]
+        channels=meta.get("channels",1)
         versions = {"python": sys.version, "platform": sys.platform}
         for tool in ("iverilog", "vvp"):
             r = subprocess.run([tool, "-V"], capture_output=True, text=True, check=True)
@@ -87,7 +90,7 @@ def execute(out):
             command(["vvp", "sim.vvp"], directory, "simulation", cfg["timeout_seconds"], commands)
             if success not in (directory / "simulation.log").read_text().splitlines():
                 raise ValueError(f"Missing completion assertion: {top}")
-        expected = golden(pixels, w, h)
+        expected = golden(pixels, w, h, channels)
         modes = {}
         sources = ["rtl/sobel_core.v", "rtl/sobel_mmio.v", "rtl/sobel_tile.v", "rtl/native_bus_arbiter.v", "rtl/picorv32_sobel_soc.v",
                    "third_party/picorv32/picorv32.v", "tb/tb_sobel_soc.sv"]
@@ -100,23 +103,23 @@ def execute(out):
             elapsed = command(["vvp", "sim.vvp",
                 f"+firmware={ROOT / 'firmware/generated' / (mode + '.hex')}",
                 f"+firmware_bytes={firmware['images'][mode]['bytes']}",
-                f"+image={ROOT / 'image/image.hex'}", f"+width={w}", f"+height={h}",
+                f"+image={ROOT / 'image/image.hex'}", f"+width={w}", f"+height={h}", f"+channels={channels}",
                 f"+tile={cfg['tile']}", f"+memory_wait={cfg['memory_wait']}",
                 f"+max_cycles={cfg['max_cycles']}",
                 *(["+vcd"] if cfg["vcd"] else [])], directory, "simulation", cfg["timeout_seconds"], commands)
-            modes[mode] = verify_mode(directory, index, w, h, cfg["tile"], cfg["memory_wait"], expected)
+            modes[mode] = verify_mode(directory, index, w, h, cfg["tile"], cfg["memory_wait"], expected, channels)
             modes[mode]["simulation_wall_seconds"] = elapsed
             profile = json.loads((directory / 'profile.json').read_text())
             if profile['cycles'] != modes[mode]['cycles'] or profile['cycles'] != sum(profile[k] for k in
                     ('cpu_idle_cycles','cpu_fetch_cycles','cpu_mmio_cycles','cpu_data_cycles')):
                 raise ValueError('Profile cycle partition mismatch')
-            if profile['dma_write_tx'] != (w*h if index else 0) or profile['tile_start_tx'] != (modes[mode]['tiles'] if index else 0):
+            if profile['dma_write_tx'] != (w*h*channels if index else 0) or profile['tile_start_tx'] != (modes[mode]['tiles']*channels if index else 0):
                 raise ValueError('Profile DMA write/start counts mismatch')
             modes[mode]['profile'] = profile
             print(f"PROFILE: {mode} DMA reads={profile['dma_read_tx']} writes={profile['dma_write_tx']} tile starts={profile['tile_start_tx']}", flush=True)
 
-            print(f"PIXEL CHECK PASS: {mode}, {w*h} pixels, all tile events verified", flush=True)
-        result.update(status="PASS", width=w, height=h, modes=modes,
+            print(f"PIXEL CHECK PASS: {mode}, {w*h} pixels / {w*h*channels} channel samples, all tile events verified", flush=True)
+        result.update(status="PASS", width=w, height=h, channels=channels, modes=modes,
                       sw_cycles_div_hw_cycles=modes["sw"]["cycles"]/modes["hw"]["cycles"],
                       scope="RTL simulation only; CPU executes both firmware variants; HW tile DMA reads/writes external RAM",
                       accelerator=cfg["accelerator"],
@@ -125,16 +128,18 @@ def execute(out):
         # Bind playback to the exact verified traces. No preview data is invented.
         result["evidence_sha256"] = {str(p.relative_to(out)).replace(os.sep,"/"): sha(p)
             for mode in ("sw", "hw") for p in (out / mode).iterdir()
-            if p.name in ("pixels.csv", "tiles.csv", "execution.json", "output.pgm", "profile.json")}
+            if p.name in ("pixels.csv", "tiles.csv", "execution.json", "output.pgm", "output.ppm", "profile.json")}
+        result["evidence_sha256"]["run16_rtl_basis.json"] = sha(out / "run16_rtl_basis.json")
         save(out / "comparison.json", result)
-        summary = (f"FUNCTIONAL TEST PASS: {out.name}\nImage: {w} x {h}; tile={cfg['tile']}; memory_wait={cfg['memory_wait']}\n"
+        summary = (f"FUNCTIONAL TEST PASS: {out.name}\nImage: {w} x {h}; channels={channels}; tile={cfg['tile']}; memory_wait={cfg['memory_wait']}\n"
                    f"SW cycles: {modes['sw']['cycles']}\nHW cycles: {modes['hw']['cycles']}\n"
                    f"SW/HW cycles: {result['sw_cycles_div_hw_cycles']:.6f} (greater than 1 means faster HW)\n"
                    f"Time reduction vs SW at equal clock: {result['time_reduction_vs_sw_pct']:.3f}% (target >=15%, preferred >=20%)\n"
                    f"SW simulator wall seconds: {modes['sw']['simulation_wall_seconds']:.3f}\n"
                    f"HW simulator wall seconds: {modes['hw']['simulation_wall_seconds']:.3f}\n"
                    "Both outputs match independent 3x3 convolution, every pixel and tile event checked.\n"
-                   "Measured interval includes pixel fetch, CPU arithmetic/control, MMIO, output stores and tile events.\n"
+                   "Measured interval includes all channel loops, pixel fetch, CPU arithmetic/control, MMIO, output stores and tile events.\n"
+                   "Host image decoding/packing and replay are excluded equally for SW/HW.\n"
                    "ASIC timing, area, power, DRC, LVS, antenna and electrical checks: NOT_RUN.\n")
         (out / "SUMMARY.txt").write_text(summary, encoding="utf-8")
         print(summary, flush=True)
@@ -171,7 +176,8 @@ def main():
         if not shutil.which(tool):
             p.error(f"Missing {tool}; install Icarus Verilog in Ubuntu")
     validate_firmware(ROOT)
-    load_image(a.image)
+    validate_run16_rtl(ROOT)
+    image_meta, _ = load_image(a.image)
     out = ROOT / "reports" / a.run
     if out.exists() or out.with_suffix(".zip").exists():
         p.error("RUN or archive already exists. Choose a new RUN name; no overwrite allowed")
@@ -180,10 +186,10 @@ def main():
     frozen.mkdir()
     for name in ("rtl", "tb", "firmware", "third_party", "scripts"):
         shutil.copytree(ROOT / name, frozen / name, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-    for name in ("README.md", "AGENTS.md", "OPENLANE_WORKFLOW_NOTES.md", "ARCHITECTURE.md"):
+    for name in ("README.md", "AGENTS.md", "OPENLANE_WORKFLOW_NOTES.md", "ARCHITECTURE.md", "RGB_RUN_GUIDE.md"):
         shutil.copy2(ROOT / name, frozen / name)
     shutil.copytree(a.image, frozen / "image")
-    cfg = {"accelerator": "tile_dma_v1", "run": a.run, "tile": a.tile, "memory_wait": a.memory_wait,
+    cfg = {"accelerator": "tile_dma_v1", "channels": image_meta.get("channels",1), "physical_basis": "run16-baseline; no new physical run", "run": a.run, "tile": a.tile, "memory_wait": a.memory_wait,
            "vcd": a.vcd, "timeout_seconds": a.timeout_seconds, "max_cycles": a.max_cycles,
            "source_image": str(a.image.resolve())}
     save(out / "run_config.json", cfg)

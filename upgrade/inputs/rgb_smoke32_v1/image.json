@@ -1,0 +1,12 @@
+{
+  "kind": "INPUT_ONLY",
+  "width": 32,
+  "height": 32,
+  "channels": 3,
+  "layout": "planar_RGB",
+  "hex_sha256": "fb3508af9ad4c1e88dbdb07063b26240dec3dbd169197278ebd3f87b2c3d406c",
+  "provenance": {
+    "generator": "original RGB channel diagnostic v1",
+    "purpose": "channel ordering, gradients, clipping, image borders, tile seams/partial tiles"
+  }
+}

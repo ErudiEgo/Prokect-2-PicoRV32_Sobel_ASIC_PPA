@@ -1,0 +1,15 @@
+{
+  "kind": "INPUT_ONLY",
+  "width": 128,
+  "height": 128,
+  "channels": 1,
+  "layout": "gray8",
+  "hex_sha256": "00485d9a4ba598b907d66a5b939d535de8560fe1d08d0e5dfca361cc9a475fd7",
+  "provenance": {
+    "generator": "prepare_h2_characterization.py",
+    "generator_sha256": "9e0fe1b443d84459dda3d2e27320be527ec1c8215e3b6da062f8691303b4a47d",
+    "kind": "synthetic_coordinate_field_v1",
+    "formula": "(3*x+5*y+48*((x//16+y//16)%2)+(96 if (x-24)^2+(y-24)^2<100 else 0))%256",
+    "sampling": "top-left crop; no scaling; synthetic diagnostic input, not natural imagery"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "kind": "COMPILED_NOT_EXECUTED",
+  "sources": {
+    "firmware/s1/main.c": "bb723046f466370c599e3cd2bab878e1f078a4f264abd76cd1fd9df4919eb33b",
+    "firmware/s1/sobel_s1.h": "64692e587003129aec2ce4e8fd9557a0f300cc7e2d3ecc7f69cf55c8e32175d6",
+    "firmware/start.S": "0b7f5324e4a8f34dc7d01c7f52b50460373726edfb047d5afc991b4314aeea77",
+    "firmware/link.ld": "1ecc9dec70ce6c6c7541e2c72161bb31b32a4ba0ff7390ccd1219c8e56153a63"
+  },
+  "compiler": "riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "flags": [
+    "-march=rv32i",
+    "-mabi=ilp32",
+    "-O2",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-fno-pic",
+    "-msmall-data-limit=0",
+    "-nostdlib",
+    "-nostartfiles",
+    "-Wl,--no-relax"
+  ],
+  "link_libraries": [
+    "gcc"
+  ],
+  "baseline_rebuild": "S0_H1_BYTE_IDENTICAL",
+  "baseline_hex_sha256": {
+    "sw": "f41c1f720de0919e176a18528fd41aab7d18be32ed7ccec2e44d25e78e161cba",
+    "hw": "3e0ad88f16a6bede96457d3386e16e663378ad04d24b73314de3da5d169a69ef"
+  },
+  "image": {
+    "bytes": 1500,
+    "sha256": "49d8e0927c7e2e61eb13ddd56eaa851423c1681e628e7e99758d6f35ae20697d"
+  },
+  "build_artifacts_sha256": {
+    "baseline_main.c": "a46c5d17a62820d69e22e261580f140724bbccfa153ee971c9bdbdd5bbb33a50",
+    "compiler.txt": "b44d13490dca2fb30d8cf52505e06bf5239beabd22ee1c3ac8c41deaba584f66",
+    "hw.bin": "4bd889118d519616c90cbd72f6e762848fd090484fbf6d172774a1856ba42df1",
+    "hw.disassembly.txt": "6e6df409b8139bb99803974221cbb6aea2b96995d76e36e86616e08c27a11e57",
+    "hw.elf": "8a15dab732610b9337abefa60d553dda4996476b0b39ac9f696f74b98a7a9f5f",
+    "hw.map": "700351cb62dff4827a6d83e11848404074d09135ff1fc8717f075d7397dca525",
+    "link.ld": "1ecc9dec70ce6c6c7541e2c72161bb31b32a4ba0ff7390ccd1219c8e56153a63",
+    "main.c": "bb723046f466370c599e3cd2bab878e1f078a4f264abd76cd1fd9df4919eb33b",
+    "s1.bin": "5b88c6ef164d70580cac79fddc26fa8c353c74ff9d6d6402eebcd3fb8ff2a770",
+    "s1.disassembly.txt": "749ed51b10f8d055691eff501617c7663c4ed9db56389ba7d3800ad4754cffb2",
+    "s1.elf": "8062a67b9181e073f8275cc6359e82026b2efad998a8aec7764463d0c983de8b",
+    "s1.map": "9e14899190005f2059be34eeca876a1610f887ccbd3874d78cafaa5b68426e85",
+    "sobel_s1.h": "64692e587003129aec2ce4e8fd9557a0f300cc7e2d3ecc7f69cf55c8e32175d6",
+    "start.S": "0b7f5324e4a8f34dc7d01c7f52b50460373726edfb047d5afc991b4314aeea77",
+    "sw.bin": "67474b2332bddd34973256603cdde2f222ac8df321451207b9eea77fd60ca2ee",
+    "sw.disassembly.txt": "2877ae96f840eb5de378700263611fefec489c4db6eed1fb3c0a4ead43f4aba5",
+    "sw.elf": "6ccd2c67bfaff599b4318d5afff0496139182ef1eecd89e0f85c9a98b1d9600c",
+    "sw.map": "30df71e5ed1a1a5b8dbc5d89d28ab5a0f54c2a3d0aca2fa45e43ea6a6050b689"
+  },
+  "build_evidence_sha256": "5b01ca51ba24545bc6bb53cfe751a88123cbf00ef71d8fbe8226cc85e3c21fa7"
+}

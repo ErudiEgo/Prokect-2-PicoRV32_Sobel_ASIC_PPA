@@ -1,0 +1,7 @@
+/scripts/* text eol=lf
+/firmware/* text eol=lf
+/firmware/generated/* text eol=lf
+/tb/* text eol=lf
+/inputs/rgb*/image.hex text eol=lf
+/inputs/rgb*/image.json text eol=lf
+/inputs/rgb*/*.ppm binary

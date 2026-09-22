@@ -21,6 +21,7 @@ for variant in 0 1; do
         third_party/picorv32/picorv32.v tb/tb_sobel_soc.sv 2>&1 | tee "$OUT/soc_$variant.log"
 done
 for script in scripts/*.sh; do bash -n "$script"; done
+python3 scripts/test_rgb_evidence.py 2>&1 | tee "$OUT/rgb_checker_tests.log"
 python3 scripts/static_check.py 2>&1 | tee "$OUT/python_and_inputs.log"
 sha256sum rtl/*.v tb/*.sv firmware/main.c firmware/start.S firmware/link.ld \
     firmware/generated/*.hex firmware/generated/manifest.json third_party/picorv32/picorv32.v \

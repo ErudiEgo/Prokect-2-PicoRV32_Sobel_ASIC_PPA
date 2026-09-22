@@ -76,3 +76,12 @@
 !/inputs/shapes64_01_01/input.pgm
 !/inputs/shapes64_01_01/image.hex
 !/inputs/shapes64_01_01/image.json
+# Small original RGB diagnostic INPUT fixtures, never generated RTL evidence.
+!/inputs/rgb_smoke32_v1/image.json
+!/inputs/rgb_smoke32_v1/image.hex
+!/inputs/rgb_smoke32_v1/input.ppm
+!/inputs/rgb_smoke32_v1/original.ppm
+!/inputs/rgb_partial17x19_v1/image.json
+!/inputs/rgb_partial17x19_v1/image.hex
+!/inputs/rgb_partial17x19_v1/input.ppm
+!/inputs/rgb_partial17x19_v1/original.ppm

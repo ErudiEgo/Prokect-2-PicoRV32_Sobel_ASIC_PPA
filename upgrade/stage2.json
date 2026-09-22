@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "project_id": "picorv32_sobel_stage2",
+  "milestone": "M2_software_baseline",
+  "accelerator": "tile_dma_v1_run16",
+  "software_baseline": "S0_preserved_plus_S1_horizontal_window",
+  "target_long_edge_pixels": 480,
+  "current_gray_limit": 512,
+  "current_rgb_limit": 256,
+  "physical_status": "NOT_RUN",
+  "functional_status": "M2_ACCEPTED_DMA_V2_UNIT_ACCEPTED_M3_SOC_USER_RUN_REQUIRED",
+  "simulation_owner": "user",
+  "physical_flow_owner": "user",
+  "integration": "M3_dma_integration"
+}

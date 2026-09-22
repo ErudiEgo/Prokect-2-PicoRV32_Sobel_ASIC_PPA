@@ -1,0 +1,10 @@
+{
+  "kind": "INPUT_ONLY",
+  "width": 37,
+  "height": 35,
+  "hex_sha256": "f6bda09e0d9a082b0f9034ec49ce0969b981c7e8f56128c1ecb9579ff33c980e",
+  "provenance": {
+    "generator": "original deterministic diagnostic 37x35 v1",
+    "purpose": "whole-image borders, low gradients, clipping, tile seams and partial tiles"
+  }
+}

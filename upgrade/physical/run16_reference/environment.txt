@@ -1,0 +1,4 @@
+image=ghcr.io/efabless/openlane2:2.3.10
+image_id=sha256:37c3bd4ea0534a276cb2deb88d601044857bad2807b9bc5b36efe9d02c62624e
+pdk_root=/home/koika/.volare
+pdk_resolved=/home/koika/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A

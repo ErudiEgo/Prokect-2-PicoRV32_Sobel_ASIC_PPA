@@ -1,3 +1,12 @@
+# RGB branch from RUN16
+
+Current branch: `codex/rgb-from-run16`, based on tag `run16-baseline` (`e9ff741`).
+Sequential RGB Sobel reuses the unchanged RUN16 RTL. RGB up to 256x256; grayscale up to 512x512.
+**RGB32 functional PASS:** `soc_rgb32_smoke_01` independently audited: SW1352946 / HW206960 cycles, 6.537234x speedup, all 3072 channel samples and 4 tile events correct. [Review and evidence](RGB32_FIRST_RUN_REVIEW.md). RGB partial-tile and grayscale regression runs are next; no new RGB physical/power results.
+Start with [RGB_RUN_GUIDE.md](RGB_RUN_GUIDE.md). Ubuntu workspace is now `~/openlane_projects/picorv32_sobel_rgb_asic_ppa`.
+RUN16 retains its documented one fanout violation and vectorless power limitations; no RGB power/physical PASS is claimed.
+The records below describe historical grayscale work.
+
 # PicoRV32 Sobel ASIC PPA
 
 **Đồ án:** Thiết kế hệ thống PicoRV32 tích hợp bộ tăng tốc Sobel và đánh giá PPA bằng OpenLane.
