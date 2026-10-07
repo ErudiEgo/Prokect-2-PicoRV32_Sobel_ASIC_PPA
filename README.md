@@ -48,6 +48,7 @@ Read `FULL_TECHNICAL_REPORT.md` for assumptions and limits.
 - `flow/`: exact custom OpenLane flow source frozen by the RUN.
 - `config.json`, `constraints.sdc`, `pin_order.cfg`: final physical inputs.
 - `guidance_archives/`: compressed, hash-pinned OpenDB guidance checkpoints.
+- `evidence/flow_metadata/`: frozen ECO, diagnostic and provenance metadata.
 - `release/picorv32_h3_logic_ppa.gds`: verified KLayout GDS stream-out.
 - `release/evidence/`: compact report package.
 - `.github/workflows/gds3d.yml`: GitHub Pages/TinyTapeout 3D viewer deployment.
