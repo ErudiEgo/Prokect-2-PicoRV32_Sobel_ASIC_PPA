@@ -2,6 +2,18 @@
 
 Clean publication branch for the final 40 ns PicoRV32–H3 ASIC logic result.
 
+[![Publish final C40 GDS in TinyTapeout 3D Viewer](https://github.com/ErudiEgo/Prokect-2-PicoRV32_Sobel_ASIC_PPA/actions/workflows/gds3d.yml/badge.svg?branch=H3_40ns_final)](https://github.com/ErudiEgo/Prokect-2-PicoRV32_Sobel_ASIC_PPA/actions/workflows/gds3d.yml)
+
+## View the final layout
+
+- [Open the PicoRV32–H3 C40 layout in the TinyTapeout 3D GDS Viewer](https://erudiego.github.io/Prokect-2-PicoRV32_Sobel_ASIC_PPA/)
+- Published model: `picorv32_h3_logic_ppa.gds.gltf`
+- Source GDS: `release/picorv32_h3_logic_ppa.gds`
+
+The GitHub Pages workflow verifies the frozen GDS SHA-256 before converting it
+to glTF. The viewer is a public visualization of the final layout; it is not a
+TinyTapeout submission or evidence of fabrication.
+
 ## Provenance
 
 - Frozen physical RUN: `s2_h3_c40_monolithic_06`
@@ -66,10 +78,18 @@ installed Docker image/PDK, see `REPRODUCE_OPENLANE.md`.
 
 ## TinyTapeout status
 
-The 3D web publication is ready. A real TinyTapeout submission is **not yet
-ready**: the current top has the project-specific memory bus rather than a
-`tt_um_*` wrapper, excludes SRAM/pads, and is much larger than a normal single
-TinyTapeout tile. See `TINY_TAPEOUT_PORTING.md`.
+The [3D web publication](https://erudiego.github.io/Prokect-2-PicoRV32_Sobel_ASIC_PPA/)
+is live. A real TinyTapeout submission is **not yet ready**: the current top has
+the project-specific memory bus rather than a `tt_um_*` wrapper, excludes
+SRAM/pads, and is much larger than a normal single TinyTapeout tile. See
+`TINY_TAPEOUT_PORTING.md`.
+
+## Branch policy
+
+`H3_40ns_final` is the canonical publication branch. Historical development
+milestones remain recoverable from signed or named tags, while generated runs,
+temporary conversion products, caches and local reports are intentionally kept
+out of this branch.
 
 ## Scope
 
@@ -77,4 +97,3 @@ The physical top contains PicoRV32 and H3 logic/control/datapath. External
 program/image SRAM, UART, camera, pads and package are outside the measured top.
 This is a laboratory ASIC implementation result, not a fabricated chip or an
 industrial tape-out approval.
-

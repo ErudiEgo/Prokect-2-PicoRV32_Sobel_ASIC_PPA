@@ -6,4 +6,19 @@
 **/__pycache__/
 *.pyc
 *.log
+*.tmp
+*.bak
+*.swp
+*.gds.gltf
+.DS_Store
+Thumbs.db
+/.codex/
+/.cache/
+/artifacts/
+/dist/
+/tmp/
 
+# The exact physical source staging is committed deliberately.
+/build/*
+!/build/asic_sources/
+!/build/asic_sources/**

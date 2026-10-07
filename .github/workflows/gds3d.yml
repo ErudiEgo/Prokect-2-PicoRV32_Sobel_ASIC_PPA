@@ -3,7 +3,7 @@ name: Publish final C40 GDS in TinyTapeout 3D Viewer
 on:
   workflow_dispatch:
   push:
-    branches: [H3_40ns_final, main]
+    branches: [H3_40ns_final]
     paths:
       - release/picorv32_h3_logic_ppa.gds
       - .github/workflows/gds3d.yml
