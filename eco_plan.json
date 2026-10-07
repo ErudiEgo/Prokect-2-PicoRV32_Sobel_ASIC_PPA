@@ -1,0 +1,201 @@
+[
+  {
+    "net": "H3_ECO06_N_185_2",
+    "driver": "H3_ECO06_B_185_2/X",
+    "driver_cell": "sky130_fd_sc_hd__buf_8",
+    "power": {
+      "VPWR": "VPWR",
+      "VGND": "VGND",
+      "VPB": "VPWR",
+      "VNB": "VGND"
+    },
+    "branches": [
+      {
+        "buffer": "H3_ECO17_B_0_0",
+        "net": "H3_ECO17_N_0_0",
+        "upstream": "H3_ECO06_N_185_2",
+        "master": "sky130_fd_sc_hd__buf_2",
+        "xy": [
+          867100,
+          650080
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_0_1",
+        "net": "H3_ECO17_N_0_1",
+        "upstream": "H3_ECO17_N_0_0",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          861273,
+          650986
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_0_2",
+        "net": "H3_ECO17_N_0_2",
+        "upstream": "H3_ECO17_N_0_1",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          880286,
+          602933
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_0_3",
+        "net": "H3_ECO17_N_0_3",
+        "upstream": "H3_ECO17_N_0_2",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          899300,
+          554880
+        ],
+        "loads": [
+          "_50870_/A2"
+        ]
+      },
+      {
+        "buffer": "H3_ECO17_B_0_4",
+        "net": "H3_ECO17_N_0_4",
+        "upstream": "H3_ECO17_N_0_1",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          842260,
+          699040
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_0_5",
+        "net": "H3_ECO17_N_0_5",
+        "upstream": "H3_ECO17_N_0_4",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          792580,
+          726240
+        ],
+        "loads": [
+          "_49540_/A1"
+        ]
+      },
+      {
+        "buffer": "H3_ECO17_B_0_6",
+        "net": "H3_ECO17_N_0_6",
+        "upstream": "H3_ECO17_N_0_4",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          891940,
+          671840
+        ],
+        "loads": [
+          "_33542_/A"
+        ]
+      }
+    ]
+  },
+  {
+    "net": "net1278",
+    "driver": "fanout1278/X",
+    "driver_cell": "sky130_fd_sc_hd__clkbuf_8",
+    "power": {
+      "VPWR": "VPWR",
+      "VGND": "VGND",
+      "VPB": "VPWR",
+      "VNB": "VGND"
+    },
+    "branches": [
+      {
+        "buffer": "H3_ECO17_B_1_0",
+        "net": "H3_ECO17_N_1_0",
+        "upstream": "net1278",
+        "master": "sky130_fd_sc_hd__buf_2",
+        "xy": [
+          832140,
+          682720
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_1_1",
+        "net": "H3_ECO17_N_1_1",
+        "upstream": "H3_ECO17_N_1_0",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          832140,
+          699040
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_1_2",
+        "net": "H3_ECO17_N_1_2",
+        "upstream": "H3_ECO17_N_1_1",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          809370,
+          685440
+        ],
+        "loads": [
+          "_47695_/A1",
+          "_47956_/A1"
+        ]
+      },
+      {
+        "buffer": "H3_ECO17_B_1_3",
+        "net": "H3_ECO17_N_1_3",
+        "upstream": "H3_ECO17_N_1_1",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          854910,
+          712640
+        ],
+        "loads": []
+      },
+      {
+        "buffer": "H3_ECO17_B_1_4",
+        "net": "H3_ECO17_N_1_4",
+        "upstream": "H3_ECO17_N_1_3",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          839040,
+          674560
+        ],
+        "loads": [
+          "_48087_/A1"
+        ]
+      },
+      {
+        "buffer": "H3_ECO17_B_1_5",
+        "net": "H3_ECO17_N_1_5",
+        "upstream": "H3_ECO17_N_1_3",
+        "master": "sky130_fd_sc_hd__buf_8",
+        "xy": [
+          870780,
+          750720
+        ],
+        "loads": [
+          "_45348_/A1"
+        ]
+      }
+    ],
+    "retained_loads": [
+      "ANTENNA_3500/DIODE",
+      "ANTENNA_3501/DIODE",
+      "ANTENNA_4563/DIODE",
+      "ANTENNA_4564/DIODE",
+      "ANTENNA_4565/DIODE",
+      "_47407_/A1",
+      "_47408_/A1",
+      "fanout1276/A",
+      "fanout1277/A"
+    ],
+    "root_anchor": [
+      832140,
+      682720
+    ],
+    "root_search_um": 80,
+    "split_scope": "Load-side branch; original net has nine retained loads plus one buffer input; extracted cap/timing require actual reports."
+  }
+]

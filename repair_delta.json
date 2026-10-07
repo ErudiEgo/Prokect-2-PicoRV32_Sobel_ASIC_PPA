@@ -1,0 +1,21 @@
+{
+  "status": "BATCH16_PREPARED_NOT_RUN",
+  "parent": "s2_h3_logic_repair_15",
+  "targets": 10,
+  "buffers": 151,
+  "deferred_no_root_capacity": [
+    "_39529_/Y",
+    "fanout7300/X"
+  ],
+  "scope": "Certified insertion -> native placement gate -> cleanup -> fresh routing -> bounded antenna -> extracted STA. Final DRC/LVS/XOR/GDS NOT_RUN. System RAM/UART excluded.",
+  "certificate": {
+    "status": "ROW_CAPACITY_CERTIFICATE_PASS",
+    "original_instances": 73243,
+    "new_buffers": 151,
+    "original_moves": 16,
+    "max_original_move_um": 5.98,
+    "max_root_distance_um": 23.0,
+    "max_branch_sum_um": 231.82,
+    "limits": "Integer row/padding and geometry certificate, not native placement/DRC/STA sign-off"
+  }
+}

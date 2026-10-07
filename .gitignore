@@ -1,0 +1,9 @@
+/guidance/
+/runs/
+/reports/
+/run_inputs/
+/site/
+**/__pycache__/
+*.pyc
+*.log
+

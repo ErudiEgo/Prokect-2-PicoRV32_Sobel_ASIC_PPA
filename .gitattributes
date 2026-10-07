@@ -1,0 +1,3 @@
+# Preserve the exact bytes frozen in the accepted RUN evidence.  This avoids
+# CRLF/LF conversion changing snapshot hashes when cloning on another OS.
+* -text

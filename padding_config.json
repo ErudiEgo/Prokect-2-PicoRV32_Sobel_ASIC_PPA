@@ -1,0 +1,11 @@
+{
+  "DPL_CELL_PADDING": "2",
+  "CELL_PAD_EXCLUDE": [
+    "sky130_fd_sc_hd__tap*",
+    "sky130_fd_sc_hd__decap*",
+    "sky130_ef_sc_hd__decap*",
+    "sky130_fd_sc_hd__fill*"
+  ],
+  "DIODE_PADDING": null,
+  "DIODE_CELL": "sky130_fd_sc_hd__diode_2/DIODE"
+}

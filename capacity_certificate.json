@@ -1,0 +1,10 @@
+{
+  "status": "ROW_CAPACITY_CERTIFICATE_PASS",
+  "original_instances": 73419,
+  "new_buffers": 13,
+  "original_moves": 6,
+  "max_original_move_um": 2.3,
+  "max_root_distance_um": 38.54,
+  "max_branch_sum_um": 233.96,
+  "limits": "Integer row/padding and geometry certificate, not native placement/DRC/STA sign-off"
+}

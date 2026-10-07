@@ -1,0 +1,204 @@
+{
+  "upstream_sha256": "0836050971b3c6cdd28ac3b1e5719a67fb645161912bef1e472e63995ceb0622",
+  "scope": "Exact lines only in generated physical copy; original unchanged; no physical checker disabled",
+  "sites": [
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 271,
+      "text": "\tgenerate if (ENABLE_FAST_MUL) begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 284,
+      "text": "\tend else if (ENABLE_MUL) begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 297,
+      "text": "\tend else begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 304,
+      "text": "\tgenerate if (ENABLE_DIV) begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 317,
+      "text": "\tend else begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 1228,
+      "text": "\tgenerate if (TWO_CYCLE_ALU) begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "GENUNNAMED",
+      "line_without_timescale": 1237,
+      "text": "\tend else begin",
+      "reason": "Upstream anonymous generate naming; preserve existing hierarchy. No logic, latch, clock or timing rule is waived."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 180,
+      "text": "\treg [31:0] dbg_insn_addr;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 182,
+      "text": "\twire dbg_mem_valid = mem_valid;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 183,
+      "text": "\twire dbg_mem_instr = mem_instr;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 184,
+      "text": "\twire dbg_mem_ready = mem_ready;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 185,
+      "text": "\twire [31:0] dbg_mem_addr  = mem_addr;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 186,
+      "text": "\twire [31:0] dbg_mem_wdata = mem_wdata;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 187,
+      "text": "\twire [ 3:0] dbg_mem_wstrb = mem_wstrb;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 188,
+      "text": "\twire [31:0] dbg_mem_rdata = mem_rdata;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 374,
+      "text": "\twire mem_busy = |{mem_do_prefetch, mem_do_rinst, mem_do_rdata, mem_do_wdata};",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 695,
+      "text": "\t`FORMAL_KEEP reg [31:0] dbg_rs1val;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 696,
+      "text": "\t`FORMAL_KEEP reg [31:0] dbg_rs2val;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 697,
+      "text": "\t`FORMAL_KEEP reg dbg_rs1val_valid;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 698,
+      "text": "\t`FORMAL_KEEP reg dbg_rs2val_valid;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 768,
+      "text": "\treg dbg_valid_insn;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "UNUSEDSIGNAL",
+      "line_without_timescale": 1183,
+      "text": "\t`FORMAL_KEEP reg [127:0] dbg_ascii_state;",
+      "reason": "Upstream debug/observation-only signal, unused in this configured CPU. Preserve upstream RTL for debug compatibility."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1405,
+      "text": "\t\tset_mem_do_rinst = 0;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1406,
+      "text": "\t\tset_mem_do_rdata = 0;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1407,
+      "text": "\t\tset_mem_do_wdata = 0;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1439,
+      "text": "\t\tnext_irq_pending = ENABLE_IRQ ? irq_pending & LATCHED_IRQ : 'bx;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1494,
+      "text": "\t\t\t\tcurrent_pc = reg_next_pc;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1499,
+      "text": "\t\t\t\t\t\tcurrent_pc = latched_store ? (latched_stalu ? alu_out_q : reg_out) & ~1 : reg_next_pc;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1818,
+      "text": "\t\t\t\t\t\tset_mem_do_rinst = 1;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1869,
+      "text": "\t\t\t\t\t\tset_mem_do_wdata = 1;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1897,
+      "text": "\t\t\t\t\t\tset_mem_do_rdata = 1;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1473,
+      "text": "\t\t\tnext_irq_pending = 0;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    },
+    {
+      "rule": "BLKSEQ",
+      "line_without_timescale": 1973,
+      "text": "\t\tcurrent_pc = 'bx;",
+      "reason": "Intentional upstream sequential-process scratch assignment. Later statements use the just-computed value; changing to nonblocking can change behavior."
+    }
+  ]
+}

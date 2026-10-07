@@ -1,0 +1,29 @@
+{
+  "archive": "s2_h3_c30_soc_01_audit_20260927T093110354109Z.zip",
+  "sha256": "8b27fd3238c5caefe3fcec02732bfb57119c25d6e00a62951630a586157a79ad",
+  "parameter": "SMALL_MEMORY_MAP=1 in physical wrapper; C30 CPU audit used the default 0 setting",
+  "included": [
+    "picorv32_h3_soc.v",
+    "h3_control.v",
+    "h3_datapath_controlled.v",
+    "h3_scan_read_controlled.v",
+    "h3_window3x3.v",
+    "h3_operator_sobel.v",
+    "h3_operator_box3x3.v",
+    "h3_write.v",
+    "h3_mem_adapter_native.v",
+    "sobel_core.v",
+    "sobel_mmio.v",
+    "native_bus_arbiter.v",
+    "picorv32.v"
+  ],
+  "excluded": [
+    "UART",
+    "boot bridge",
+    "system RAM and controller",
+    "host endpoint",
+    "pads/package"
+  ],
+  "scope": "C30 control arithmetic passed standalone control and real-PicoRV32 small-frame trace equivalence; all other physical RTL remains RUN17",
+  "clock": "40 ns physical target; this is proved only by the subsequent OpenLane gates"
+}

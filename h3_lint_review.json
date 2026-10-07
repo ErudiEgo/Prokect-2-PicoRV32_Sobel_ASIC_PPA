@@ -1,0 +1,44 @@
+[
+  {
+    "file": "h3_control.v",
+    "rule": "WIDTHTRUNC",
+    "line": " wire descriptor_ok=(!SMALL_MEMORY_MAP||banked_ok)&&fw>=1&&fw<=512&&fh>=1&&fh<=512&&tw>=1&&tw<=64&&th>=1&&th<=64&&",
+    "reason": "SMALL_MEMORY_MAP is fixed integer parameter1 at this physical top; logical negation is intentional."
+  },
+  {
+    "file": "h3_control.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " wire [63:0] ec,reads;",
+    "reason": "Engine cycle output not used; MMIO exposes controller cycles instead."
+  },
+  {
+    "file": "h3_datapath_controlled.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " wire rvalid,rready,rrvalid,rrready,scan_busy,scan_done,scan_error;",
+    "reason": "scan_busy diagnostic output unused; scan_done/error drive control."
+  },
+  {
+    "file": "h3_datapath_controlled.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " wire result_ready,writer_busy,writer_done,writer_error,commit;",
+    "reason": "writer_busy diagnostic output unused; done/error/commit drive control."
+  },
+  {
+    "file": "h3_scan_read_controlled.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " reg [31:0] base,stride,address,row_pointer,pixel_pointer;",
+    "reason": "base register is assigned but never read; address generators use captured pointers."
+  },
+  {
+    "file": "h3_operator_sobel.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " input wire [71:0] s_window,input wire [73:0] s_meta,",
+    "reason": "Center pixel coefficient zero in both Sobel kernels; middle8bits intentionally unused."
+  },
+  {
+    "file": "h3_operator_box3x3.v",
+    "rule": "UNUSEDSIGNAL",
+    "line": " wire [11:0] quotient=sum/12'd9;",
+    "reason": "sum maximum2295; quotient maximum255; high4bits intentionally unused."
+  }
+]

@@ -1,0 +1,2787 @@
+[
+  {
+    "net": "H3_ECO06_N_145_0",
+    "driver": "H3_ECO06_B_145_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_145_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.196124,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.72038,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_145_0/X"
+    },
+    "setup_min": {
+      "ns": 26.864914,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_145_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_159_2",
+    "driver": "H3_ECO06_B_159_2/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_159_2/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.192987,
+    "loads": 9,
+    "hold_min": {
+      "ns": 0.789395,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_159_2/X"
+    },
+    "setup_min": {
+      "ns": 20.665667,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_159_2/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_15_0",
+    "driver": "H3_ECO06_B_15_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_15_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.256157,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.360873,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_15_0/X"
+    },
+    "setup_min": {
+      "ns": 18.131168,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_15_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_162_2",
+    "driver": "H3_ECO06_B_162_2/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_162_2/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.26065,
+    "loads": 3,
+    "hold_min": {
+      "ns": 2.843563,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_162_2/X"
+    },
+    "setup_min": {
+      "ns": 37.045883,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_162_2/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_164_0",
+    "driver": "H3_ECO06_B_164_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_164_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.269034,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.575108,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_164_0/X"
+    },
+    "setup_min": {
+      "ns": 26.731997,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_164_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_171_0",
+    "driver": "H3_ECO06_B_171_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_171_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.2238,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.549717,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_171_0/X"
+    },
+    "setup_min": {
+      "ns": 37.777298,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_171_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_174_0",
+    "driver": "H3_ECO06_B_174_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_174_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.214819,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.619024,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_174_0/X"
+    },
+    "setup_min": {
+      "ns": 37.796944,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_174_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_175_1",
+    "driver": "H3_ECO06_B_175_1/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_175_1/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.217959,
+    "loads": 3,
+    "hold_min": {
+      "ns": 2.710859,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_175_1/X"
+    },
+    "setup_min": {
+      "ns": 37.864811,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_175_1/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_17_0",
+    "driver": "H3_ECO06_B_17_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_17_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.222994,
+    "loads": 3,
+    "hold_min": {
+      "ns": 1.700646,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_17_0/X"
+    },
+    "setup_min": {
+      "ns": 27.400015,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_17_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_187_0",
+    "driver": "H3_ECO06_B_187_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_187_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.202228,
+    "loads": 3,
+    "hold_min": {
+      "ns": 0.864602,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_187_0/X"
+    },
+    "setup_min": {
+      "ns": 37.540722,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_187_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_2_0",
+    "driver": "H3_ECO06_B_2_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_2_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.198695,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.965197,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_2_0/X"
+    },
+    "setup_min": {
+      "ns": 15.430896,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_2_0/X"
+    }
+  },
+  {
+    "net": "H3_ECO06_N_6_0",
+    "driver": "H3_ECO06_B_6_0/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "H3_ECO06_B_6_0/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.204233,
+    "loads": 6,
+    "hold_min": {
+      "ns": 3.243543,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_6_0/X"
+    },
+    "setup_min": {
+      "ns": 10.544035,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_6_0/X"
+    }
+  },
+  {
+    "net": "_07189_",
+    "driver": "_39052_/Y",
+    "cell": "sky130_fd_sc_hd__nor4_1",
+    "pins": [
+      "H3_ECO06_B_1_0/A",
+      "_39052_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.02655,
+    "loads": 1,
+    "hold_min": {
+      "ns": 2.602002,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_1_0/A"
+    },
+    "setup_min": {
+      "ns": 12.30157,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_1_0/A"
+    }
+  },
+  {
+    "net": "_07193_",
+    "driver": "_39056_/Y",
+    "cell": "sky130_fd_sc_hd__nand4_4",
+    "pins": [
+      "H3_ECO06_B_2_0/A",
+      "H3_ECO06_B_2_1/A",
+      "_39056_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.16328,
+    "loads": 2,
+    "hold_min": {
+      "ns": 2.811383,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_2_1/A"
+    },
+    "setup_min": {
+      "ns": 15.430896,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_2_0/A"
+    }
+  },
+  {
+    "net": "_07270_",
+    "driver": "_39133_/Y",
+    "cell": "sky130_fd_sc_hd__a41oi_4",
+    "pins": [
+      "ANTENNA_2150/DIODE",
+      "ANTENNA_2322/DIODE",
+      "ANTENNA_4274/DIODE",
+      "_39133_/Y",
+      "fanout988/A",
+      "fanout989/A",
+      "fanout994/A"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.1194,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.323422,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_39133_/Y"
+    },
+    "setup_min": {
+      "ns": 13.779318,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_39133_/Y"
+    }
+  },
+  {
+    "net": "_07323_",
+    "driver": "_39186_/X",
+    "cell": "sky130_fd_sc_hd__o31a_4",
+    "pins": [
+      "_39186_/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.215412,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.316087,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_39186_/X"
+    },
+    "setup_min": {
+      "ns": 14.347943,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_39186_/X"
+    }
+  },
+  {
+    "net": "_07666_",
+    "driver": "_39529_/Y",
+    "cell": "sky130_fd_sc_hd__a22oi_4",
+    "pins": [
+      "ANTENNA_3820/DIODE",
+      "_39529_/Y",
+      "_47798_/A3",
+      "_47799_/A3",
+      "_48790_/A1",
+      "_49576_/A3",
+      "wire74/A"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.141711,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.673428,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_39529_/Y"
+    },
+    "setup_min": {
+      "ns": 14.574323,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_39529_/Y"
+    }
+  },
+  {
+    "net": "_07824_",
+    "driver": "_39687_/X",
+    "cell": "sky130_fd_sc_hd__o31a_4",
+    "pins": [
+      "_39687_/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.209016,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.550115,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_39687_/X"
+    },
+    "setup_min": {
+      "ns": 21.944584,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_39687_/X"
+    }
+  },
+  {
+    "net": "_12743_",
+    "driver": "_44606_/Y",
+    "cell": "sky130_fd_sc_hd__a21boi_4",
+    "pins": [
+      "H3_ECO06_B_9_0/A",
+      "H3_ECO06_B_9_1/A",
+      "_44606_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.144284,
+    "loads": 2,
+    "hold_min": {
+      "ns": 2.323942,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "H3_ECO06_B_9_1/A"
+    },
+    "setup_min": {
+      "ns": 10.990932,
+      "corner": "max_ss_100C_1v60",
+      "pin": "H3_ECO06_B_9_0/A"
+    }
+  },
+  {
+    "net": "_13259_",
+    "driver": "_45122_/Y",
+    "cell": "sky130_fd_sc_hd__a21oi_1",
+    "pins": [
+      "_45122_/Y",
+      "_45393_/A",
+      "_45399_/A3"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.076008,
+    "loads": 2,
+    "hold_min": {
+      "ns": 2.576552,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_45122_/Y"
+    },
+    "setup_min": {
+      "ns": 20.087708,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_45122_/Y"
+    }
+  },
+  {
+    "net": "_14710_",
+    "driver": "_46573_/Y",
+    "cell": "sky130_fd_sc_hd__a21oi_2",
+    "pins": [
+      "_46573_/Y",
+      "_46577_/B1",
+      "_46578_/B1",
+      "_46749_/A2"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.071822,
+    "loads": 3,
+    "hold_min": {
+      "ns": 2.309304,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_46573_/Y"
+    },
+    "setup_min": {
+      "ns": 19.898548,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_46573_/Y"
+    }
+  },
+  {
+    "net": "_32609_",
+    "driver": "_33374_/Y",
+    "cell": "sky130_fd_sc_hd__inv_4",
+    "pins": [
+      "_33374_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.199366,
+    "loads": 2,
+    "hold_min": {
+      "ns": 1.951277,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_33374_/Y"
+    },
+    "setup_min": {
+      "ns": 23.447712,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_33374_/Y"
+    }
+  },
+  {
+    "net": "_32610_",
+    "driver": "_33375_/Y",
+    "cell": "sky130_fd_sc_hd__inv_8",
+    "pins": [
+      "_33375_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.238128,
+    "loads": 7,
+    "hold_min": {
+      "ns": 2.146923,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_33375_/Y"
+    },
+    "setup_min": {
+      "ns": 23.038277,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_33375_/Y"
+    }
+  },
+  {
+    "net": "_32755_",
+    "driver": "_33520_/Y",
+    "cell": "sky130_fd_sc_hd__clkinv_8",
+    "pins": [
+      "_33520_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.215339,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.487473,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_33520_/Y"
+    },
+    "setup_min": {
+      "ns": 27.400015,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_33520_/Y"
+    }
+  },
+  {
+    "net": "_32757_",
+    "driver": "_33522_/Y",
+    "cell": "sky130_fd_sc_hd__clkinv_8",
+    "pins": [
+      "_33522_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.19816,
+    "loads": 8,
+    "hold_min": {
+      "ns": 1.481776,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_33522_/Y"
+    },
+    "setup_min": {
+      "ns": 27.377464,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_33522_/Y"
+    }
+  },
+  {
+    "net": "_32776_",
+    "driver": "_33541_/Y",
+    "cell": "sky130_fd_sc_hd__clkinv_4",
+    "pins": [
+      "_33541_/Y"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.261034,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.634797,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_33541_/Y"
+    },
+    "setup_min": {
+      "ns": 28.975876,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_33541_/Y"
+    }
+  },
+  {
+    "net": "net1026",
+    "driver": "fanout1026/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "fanout1026/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.197361,
+    "loads": 4,
+    "hold_min": {
+      "ns": 3.245441,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout1026/X"
+    },
+    "setup_min": {
+      "ns": 10.544035,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout1026/X"
+    }
+  },
+  {
+    "net": "net1270",
+    "driver": "wire1270/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_4",
+    "pins": [
+      "wire1270/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.202007,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.343777,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "wire1270/X"
+    },
+    "setup_min": {
+      "ns": 19.15555,
+      "corner": "max_ss_100C_1v60",
+      "pin": "wire1270/X"
+    }
+  },
+  {
+    "net": "net1281",
+    "driver": "fanout1281/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout1281/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.239753,
+    "loads": 3,
+    "hold_min": {
+      "ns": 2.697022,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout1281/X"
+    },
+    "setup_min": {
+      "ns": 14.37191,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout1281/X"
+    }
+  },
+  {
+    "net": "net1322",
+    "driver": "fanout1322/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout1322/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.245749,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.666943,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout1322/X"
+    },
+    "setup_min": {
+      "ns": 10.032512,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout1322/X"
+    }
+  },
+  {
+    "net": "net1927",
+    "driver": "fanout1927/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout1927/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.293458,
+    "loads": 9,
+    "hold_min": {
+      "ns": 3.040668,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout1927/X"
+    },
+    "setup_min": {
+      "ns": 18.811178,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout1927/X"
+    }
+  },
+  {
+    "net": "net2686",
+    "driver": "fanout2686/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout2686/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.285173,
+    "loads": 7,
+    "hold_min": {
+      "ns": 2.057455,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout2686/X"
+    },
+    "setup_min": {
+      "ns": 22.085585,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout2686/X"
+    }
+  },
+  {
+    "net": "net2716",
+    "driver": "fanout2716/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout2716/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.194256,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.027259,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout2716/X"
+    },
+    "setup_min": {
+      "ns": 25.455896,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout2716/X"
+    }
+  },
+  {
+    "net": "net3310",
+    "driver": "fanout3310/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout3310/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.220709,
+    "loads": 2,
+    "hold_min": {
+      "ns": 1.100916,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout3310/X"
+    },
+    "setup_min": {
+      "ns": 21.23064,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout3310/X"
+    }
+  },
+  {
+    "net": "net3528",
+    "driver": "fanout3528/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout3528/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.194094,
+    "loads": 8,
+    "hold_min": {
+      "ns": 0.651951,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout3528/X"
+    },
+    "setup_min": {
+      "ns": 20.63876,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout3528/X"
+    }
+  },
+  {
+    "net": "net3552",
+    "driver": "fanout3552/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "fanout3552/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.192897,
+    "loads": 8,
+    "hold_min": {
+      "ns": 0.601584,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout3552/X"
+    },
+    "setup_min": {
+      "ns": 20.856838,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout3552/X"
+    }
+  },
+  {
+    "net": "net3691",
+    "driver": "fanout3691/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout3691/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.178869,
+    "loads": 9,
+    "hold_min": {
+      "ns": 0.542967,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout3691/X"
+    },
+    "setup_min": {
+      "ns": 25.077892,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout3691/X"
+    }
+  },
+  {
+    "net": "net3736",
+    "driver": "fanout3736/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_4",
+    "pins": [
+      "fanout3736/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.223927,
+    "loads": 7,
+    "hold_min": {
+      "ns": 2.590914,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout3736/X"
+    },
+    "setup_min": {
+      "ns": 22.84742,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout3736/X"
+    }
+  },
+  {
+    "net": "net43",
+    "driver": "_34581_/X",
+    "cell": "sky130_fd_sc_hd__mux2_4",
+    "pins": [
+      "_34581_/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.239793,
+    "loads": 1,
+    "hold_min": {
+      "ns": 2.761895,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_34581_/X"
+    },
+    "setup_min": {
+      "ns": 36.712486,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_34581_/X"
+    }
+  },
+  {
+    "net": "net5119",
+    "driver": "max_cap159/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap159/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.172358,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.885736,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap159/X"
+    },
+    "setup_min": {
+      "ns": 14.987546,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap159/X"
+    }
+  },
+  {
+    "net": "net5151",
+    "driver": "max_cap191/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap191/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.183739,
+    "loads": 5,
+    "hold_min": {
+      "ns": 2.827281,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap191/X"
+    },
+    "setup_min": {
+      "ns": 18.006979,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap191/X"
+    }
+  },
+  {
+    "net": "net5166",
+    "driver": "max_cap206/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap206/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.189487,
+    "loads": 8,
+    "hold_min": {
+      "ns": 3.114756,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap206/X"
+    },
+    "setup_min": {
+      "ns": 27.255213,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap206/X"
+    }
+  },
+  {
+    "net": "net5176",
+    "driver": "max_cap216/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap216/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.251354,
+    "loads": 9,
+    "hold_min": {
+      "ns": 3.146116,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap216/X"
+    },
+    "setup_min": {
+      "ns": 19.206503,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap216/X"
+    }
+  },
+  {
+    "net": "net5270",
+    "driver": "max_cap310/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap310/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.207334,
+    "loads": 1,
+    "hold_min": {
+      "ns": 1.694238,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap310/X"
+    },
+    "setup_min": {
+      "ns": 25.05459,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap310/X"
+    }
+  },
+  {
+    "net": "net5272",
+    "driver": "max_cap312/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap312/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.194493,
+    "loads": 5,
+    "hold_min": {
+      "ns": 1.583084,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap312/X"
+    },
+    "setup_min": {
+      "ns": 17.959259,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap312/X"
+    }
+  },
+  {
+    "net": "net5275",
+    "driver": "max_cap315/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap315/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.267087,
+    "loads": 3,
+    "hold_min": {
+      "ns": 0.654193,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap315/X"
+    },
+    "setup_min": {
+      "ns": 18.836393,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap315/X"
+    }
+  },
+  {
+    "net": "net5276",
+    "driver": "wire316/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "wire316/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.191404,
+    "loads": 3,
+    "hold_min": {
+      "ns": 0.873167,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "wire316/X"
+    },
+    "setup_min": {
+      "ns": 20.34133,
+      "corner": "max_ss_100C_1v60",
+      "pin": "wire316/X"
+    }
+  },
+  {
+    "net": "net5277",
+    "driver": "max_cap317/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap317/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.183595,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.641215,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap317/X"
+    },
+    "setup_min": {
+      "ns": 23.038277,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap317/X"
+    }
+  },
+  {
+    "net": "net5280",
+    "driver": "max_cap320/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap320/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.243136,
+    "loads": 2,
+    "hold_min": {
+      "ns": 0.878429,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap320/X"
+    },
+    "setup_min": {
+      "ns": 23.094498,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap320/X"
+    }
+  },
+  {
+    "net": "net5293",
+    "driver": "max_cap333/X",
+    "cell": "sky130_fd_sc_hd__buf_12",
+    "pins": [
+      "max_cap333/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.239476,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.799045,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap333/X"
+    },
+    "setup_min": {
+      "ns": 19.901209,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap333/X"
+    }
+  },
+  {
+    "net": "net5294",
+    "driver": "max_cap334/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap334/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.18898,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.548416,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap334/X"
+    },
+    "setup_min": {
+      "ns": 20.589233,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap334/X"
+    }
+  },
+  {
+    "net": "net5295",
+    "driver": "max_cap335/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap335/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.189243,
+    "loads": 5,
+    "hold_min": {
+      "ns": 1.878531,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap335/X"
+    },
+    "setup_min": {
+      "ns": 20.888618,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap335/X"
+    }
+  },
+  {
+    "net": "net5300",
+    "driver": "max_cap340/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap340/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.339028,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.796479,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap340/X"
+    },
+    "setup_min": {
+      "ns": 21.660328,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap340/X"
+    }
+  },
+  {
+    "net": "net5301",
+    "driver": "max_cap341/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap341/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.188932,
+    "loads": 3,
+    "hold_min": {
+      "ns": 0.754109,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap341/X"
+    },
+    "setup_min": {
+      "ns": 23.755703,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap341/X"
+    }
+  },
+  {
+    "net": "net5314",
+    "driver": "max_cap354/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap354/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.191306,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.723221,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap354/X"
+    },
+    "setup_min": {
+      "ns": 29.959652,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap354/X"
+    }
+  },
+  {
+    "net": "net5338",
+    "driver": "max_cap378/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap378/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.177428,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.633445,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap378/X"
+    },
+    "setup_min": {
+      "ns": 22.76473,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap378/X"
+    }
+  },
+  {
+    "net": "net5341",
+    "driver": "max_cap381/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "max_cap381/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.198006,
+    "loads": 7,
+    "hold_min": {
+      "ns": 1.594916,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap381/X"
+    },
+    "setup_min": {
+      "ns": 28.117407,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap381/X"
+    }
+  },
+  {
+    "net": "net5347",
+    "driver": "max_cap387/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap387/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.207318,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.147752,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap387/X"
+    },
+    "setup_min": {
+      "ns": 30.976019,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap387/X"
+    }
+  },
+  {
+    "net": "net5769",
+    "driver": "fanout5185/X",
+    "cell": "sky130_fd_sc_hd__buf_4",
+    "pins": [
+      "fanout5185/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.211673,
+    "loads": 8,
+    "hold_min": {
+      "ns": 3.392824,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout5185/X"
+    },
+    "setup_min": {
+      "ns": 15.251179,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout5185/X"
+    }
+  },
+  {
+    "net": "net5935",
+    "driver": "fanout5351/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "fanout5351/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.214753,
+    "loads": 4,
+    "hold_min": {
+      "ns": 2.800939,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout5351/X"
+    },
+    "setup_min": {
+      "ns": 14.664441,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout5351/X"
+    }
+  },
+  {
+    "net": "net6143",
+    "driver": "max_cap5559/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_4",
+    "pins": [
+      "max_cap5559/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.205303,
+    "loads": 3,
+    "hold_min": {
+      "ns": 2.633826,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap5559/X"
+    },
+    "setup_min": {
+      "ns": 19.619667,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap5559/X"
+    }
+  },
+  {
+    "net": "net6416",
+    "driver": "fanout5832/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout5832/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.188971,
+    "loads": 3,
+    "hold_min": {
+      "ns": 3.226782,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout5832/X"
+    },
+    "setup_min": {
+      "ns": 16.743715,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout5832/X"
+    }
+  },
+  {
+    "net": "net6456",
+    "driver": "fanout5872/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_16",
+    "pins": [
+      "fanout5872/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.178427,
+    "loads": 4,
+    "hold_min": {
+      "ns": 3.640686,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout5872/X"
+    },
+    "setup_min": {
+      "ns": 18.131168,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout5872/X"
+    }
+  },
+  {
+    "net": "net6680",
+    "driver": "fanout6096/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout6096/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.209152,
+    "loads": 3,
+    "hold_min": {
+      "ns": 3.528046,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout6096/X"
+    },
+    "setup_min": {
+      "ns": 20.34133,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout6096/X"
+    }
+  },
+  {
+    "net": "net7379",
+    "driver": "wire6795/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "wire6795/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.326842,
+    "loads": 2,
+    "hold_min": {
+      "ns": 2.262173,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "wire6795/X"
+    },
+    "setup_min": {
+      "ns": 14.791276,
+      "corner": "max_ss_100C_1v60",
+      "pin": "wire6795/X"
+    }
+  },
+  {
+    "net": "net7871",
+    "driver": "fanout7287/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout7287/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.199491,
+    "loads": 8,
+    "hold_min": {
+      "ns": 0.653969,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7287/X"
+    },
+    "setup_min": {
+      "ns": 29.581068,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7287/X"
+    }
+  },
+  {
+    "net": "net7878",
+    "driver": "fanout7294/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout7294/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.224885,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.842519,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7294/X"
+    },
+    "setup_min": {
+      "ns": 28.638281,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7294/X"
+    }
+  },
+  {
+    "net": "net7884",
+    "driver": "fanout7300/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_16",
+    "pins": [
+      "fanout7300/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.311802,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.873167,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7300/X"
+    },
+    "setup_min": {
+      "ns": 20.34133,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7300/X"
+    }
+  },
+  {
+    "net": "net7889",
+    "driver": "fanout7305/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_16",
+    "pins": [
+      "fanout7305/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.234331,
+    "loads": 10,
+    "hold_min": {
+      "ns": 2.155495,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7305/X"
+    },
+    "setup_min": {
+      "ns": 14.45492,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7305/X"
+    }
+  },
+  {
+    "net": "net7892",
+    "driver": "fanout7308/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "fanout7308/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.171303,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.779552,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7308/X"
+    },
+    "setup_min": {
+      "ns": 29.275154,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7308/X"
+    }
+  },
+  {
+    "net": "net7936",
+    "driver": "fanout7352/X",
+    "cell": "sky130_fd_sc_hd__buf_12",
+    "pins": [
+      "fanout7352/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.222636,
+    "loads": 5,
+    "hold_min": {
+      "ns": 0.878429,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7352/X"
+    },
+    "setup_min": {
+      "ns": 23.094498,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7352/X"
+    }
+  },
+  {
+    "net": "net7945",
+    "driver": "fanout7361/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout7361/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.149556,
+    "loads": 12,
+    "hold_min": {
+      "ns": 1.517743,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7361/X"
+    },
+    "setup_min": {
+      "ns": 29.092236,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7361/X"
+    }
+  },
+  {
+    "net": "net8132",
+    "driver": "fanout7548/X",
+    "cell": "sky130_fd_sc_hd__buf_1",
+    "pins": [
+      "ANTENNA_1129/DIODE",
+      "_51058_/A1",
+      "_51841_/B1",
+      "fanout7547/A",
+      "fanout7548/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.076471,
+    "loads": 4,
+    "hold_min": {
+      "ns": 1.075878,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_51841_/B1"
+    },
+    "setup_min": {
+      "ns": 21.929956,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7547/A"
+    }
+  },
+  {
+    "net": "net819",
+    "driver": "fanout819/X",
+    "cell": "sky130_fd_sc_hd__buf_4",
+    "pins": [
+      "fanout819/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.232941,
+    "loads": 7,
+    "hold_min": {
+      "ns": 2.73763,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout819/X"
+    },
+    "setup_min": {
+      "ns": 9.86012,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout819/X"
+    }
+  },
+  {
+    "net": "net826",
+    "driver": "fanout826/X",
+    "cell": "sky130_fd_sc_hd__buf_4",
+    "pins": [
+      "fanout826/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.215838,
+    "loads": 5,
+    "hold_min": {
+      "ns": 3.140886,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout826/X"
+    },
+    "setup_min": {
+      "ns": 15.251179,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout826/X"
+    }
+  },
+  {
+    "net": "net8289",
+    "driver": "fanout7705/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout7705/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.234869,
+    "loads": 2,
+    "hold_min": {
+      "ns": 1.566469,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7705/X"
+    },
+    "setup_min": {
+      "ns": 26.864914,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7705/X"
+    }
+  },
+  {
+    "net": "net8311",
+    "driver": "fanout7727/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout7727/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.172367,
+    "loads": 5,
+    "hold_min": {
+      "ns": 0.730992,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7727/X"
+    },
+    "setup_min": {
+      "ns": 29.894218,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7727/X"
+    }
+  },
+  {
+    "net": "net8312",
+    "driver": "fanout7728/X",
+    "cell": "sky130_fd_sc_hd__buf_12",
+    "pins": [
+      "fanout7728/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.242652,
+    "loads": 8,
+    "hold_min": {
+      "ns": 1.49144,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7728/X"
+    },
+    "setup_min": {
+      "ns": 29.323286,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7728/X"
+    }
+  },
+  {
+    "net": "net8427",
+    "driver": "fanout7843/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "fanout7843/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.181654,
+    "loads": 4,
+    "hold_min": {
+      "ns": 0.769447,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7843/X"
+    },
+    "setup_min": {
+      "ns": 24.179926,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7843/X"
+    }
+  },
+  {
+    "net": "net8451",
+    "driver": "fanout7867/X",
+    "cell": "sky130_fd_sc_hd__clkbuf_8",
+    "pins": [
+      "fanout7867/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.19021,
+    "loads": 8,
+    "hold_min": {
+      "ns": 0.807657,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout7867/X"
+    },
+    "setup_min": {
+      "ns": 34.499565,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout7867/X"
+    }
+  },
+  {
+    "net": "net8575",
+    "driver": "max_cap7991/X",
+    "cell": "sky130_fd_sc_hd__buf_6",
+    "pins": [
+      "max_cap7991/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.197008,
+    "loads": 3,
+    "hold_min": {
+      "ns": 1.340971,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "max_cap7991/X"
+    },
+    "setup_min": {
+      "ns": 27.043463,
+      "corner": "max_ss_100C_1v60",
+      "pin": "max_cap7991/X"
+    }
+  },
+  {
+    "net": "net8662",
+    "driver": "fanout8078/X",
+    "cell": "sky130_fd_sc_hd__buf_8",
+    "pins": [
+      "fanout8078/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.183282,
+    "loads": 5,
+    "hold_min": {
+      "ns": 0.587682,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout8078/X"
+    },
+    "setup_min": {
+      "ns": 20.665667,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout8078/X"
+    }
+  },
+  {
+    "net": "net913",
+    "driver": "fanout913/X",
+    "cell": "sky130_fd_sc_hd__buf_4",
+    "pins": [
+      "fanout913/X"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.251008,
+    "loads": 6,
+    "hold_min": {
+      "ns": 2.904079,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "fanout913/X"
+    },
+    "setup_min": {
+      "ns": 14.319351,
+      "corner": "max_ss_100C_1v60",
+      "pin": "fanout913/X"
+    }
+  },
+  {
+    "net": "soc.h3.dbase[6]",
+    "driver": "_69235_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69235_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.169608,
+    "loads": 7,
+    "hold_min": {
+      "ns": 0.430383,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_69235_/Q"
+    },
+    "setup_min": {
+      "ns": 28.706282,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69235_/Q"
+    }
+  },
+  {
+    "net": "soc.h3.dstride[17]",
+    "driver": "_69310_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69310_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.193941,
+    "loads": 7,
+    "hold_min": {
+      "ns": 0.410764,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_69310_/Q"
+    },
+    "setup_min": {
+      "ns": 18.478992,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69310_/Q"
+    }
+  },
+  {
+    "net": "soc.h3.dstride[23]",
+    "driver": "_69316_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69316_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.227414,
+    "loads": 2,
+    "hold_min": {
+      "ns": 0.619807,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_69316_/Q"
+    },
+    "setup_min": {
+      "ns": 21.537859,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69316_/Q"
+    }
+  },
+  {
+    "net": "soc.h3.dstride[28]",
+    "driver": "_69321_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69321_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.208959,
+    "loads": 5,
+    "hold_min": {
+      "ns": 0.439075,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_69321_/Q"
+    },
+    "setup_min": {
+      "ns": 23.101116,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69321_/Q"
+    }
+  },
+  {
+    "net": "soc.h3.dstride[29]",
+    "driver": "_69322_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69322_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.253632,
+    "loads": 5,
+    "hold_min": {
+      "ns": 0.439744,
+      "corner": "max_ff_n40C_1v95",
+      "pin": "_69322_/Q"
+    },
+    "setup_min": {
+      "ns": 24.752438,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69322_/Q"
+    }
+  },
+  {
+    "net": "soc.h3.engine.reader.src_base[19]",
+    "driver": "_69216_/Q",
+    "cell": "sky130_fd_sc_hd__dfxtp_4",
+    "pins": [
+      "_69216_/Q"
+    ],
+    "corners": [
+      "max_ff_n40C_1v95",
+      "max_ss_100C_1v60",
+      "max_tt_025C_1v80",
+      "min_ff_n40C_1v95",
+      "min_ss_100C_1v60",
+      "min_tt_025C_1v80",
+      "nom_ff_n40C_1v95",
+      "nom_ss_100C_1v60",
+      "nom_tt_025C_1v80"
+    ],
+    "wire_cap_pf": 0.232052,
+    "loads": 9,
+    "hold_min": {
+      "ns": 0.466958,
+      "corner": "min_ff_n40C_1v95",
+      "pin": "_69216_/Q"
+    },
+    "setup_min": {
+      "ns": 26.475296,
+      "corner": "max_ss_100C_1v60",
+      "pin": "_69216_/Q"
+    }
+  }
+]

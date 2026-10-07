@@ -1,0 +1,21 @@
+{
+  "status": "SMALL17_PREPARED_NOT_RUN",
+  "parent": "s2_h3_logic_repair_16",
+  "targets": 2,
+  "buffers": 13,
+  "antenna_repair_attempts": 1,
+  "max_detailed_routing_calls": 2,
+  "scope": "Certified insertion -> native placement check -> routing -> at most one antenna repair -> extracted nine-corner STA. Final DRC/LVS/XOR/GDS NOT_RUN; system RAM/UART excluded.",
+  "fanout_split": "Retain all five diodes and four logic inputs on net1278; move four logic inputs behind a non-inverting branch. Original fanout13 -> planned10; recheck after antenna.",
+  "root_geometry": "Cap source-isolation root stays within25um of its driver. Load-side fanout branch is searched within80um of the four-load median (actual38.54um); this is not a source-isolation root. Branch sum<=240um unchanged. No electrical limit relaxed.",
+  "certificate": {
+    "status": "ROW_CAPACITY_CERTIFICATE_PASS",
+    "original_instances": 73419,
+    "new_buffers": 13,
+    "original_moves": 6,
+    "max_original_move_um": 2.3,
+    "max_root_distance_um": 38.54,
+    "max_branch_sum_um": 233.96,
+    "limits": "Integer row/padding and geometry certificate, not native placement/DRC/STA sign-off"
+  }
+}

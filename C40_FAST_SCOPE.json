@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "clock_period_ns": 40.0,
+  "frequency_mhz": 25.0,
+  "base": "h3_logic_small17_v1 / RUN17 physical source",
+  "base_control_sha256": "3b6f4f4fe4dc81878082c0e38ff09d4c657d34906aa6c7c3c233fd8c65595ce6",
+  "candidate_control_sha256": "1acdeb48ff504d63942cc79c64121902f07a47a46876b990fb20fbaa13f19149",
+  "functional_archive": "s2_h3_c30_soc_01_audit_20260927T093110354109Z.zip",
+  "functional_archive_sha256": "8b27fd3238c5caefe3fcec02732bfb57119c25d6e00a62951630a586157a79ad",
+  "stop": "OpenROAD.STAMidPNR-3",
+  "post_grt_design_repair": false,
+  "repair_policy": "Native OpenROAD.ResizerTimingPostGRT in this gate; bounded electrical repair after route feasibility",
+  "removed_screen_substitution": {
+    "-OpenROAD.ResizerTimingPostGRT": "Sobel.RepairDesignSlowCorner",
+    "+OpenROAD.ResizerTimingPostGRT": "OpenROAD.RepairAntennas"
+  },
+  "removed_unused_custom_config": {
+    "SOBEL_DESIGN_REPAIR_CORNERS": [
+      "max_ss_100C_1v60"
+    ],
+    "SOBEL_POST_FANOUT_MARGIN_PCT": 55,
+    "SOBEL_SIGNAL_FANOUT_TARGET": 8
+  },
+  "expected_flow_steps": 79,
+  "claim": "Post-GRT convergence gate only; detailed routing and signoff are not run"
+}

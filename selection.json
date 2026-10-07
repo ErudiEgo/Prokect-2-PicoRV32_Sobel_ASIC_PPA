@@ -1,0 +1,25 @@
+{
+  "rule": "4 worst maxSS output-slew drivers plus 8 worst internal maxSS cap drivers, deduplicated",
+  "deferred_no_root_capacity": [
+    "_39529_/Y",
+    "fanout7300/X"
+  ],
+  "slew": [
+    "_45122_/Y",
+    "_44606_/Y",
+    "_39529_/Y",
+    "_39133_/Y"
+  ],
+  "cap": [
+    "fanout7300/X",
+    "wire6795/X",
+    "fanout1927/X",
+    "fanout2686/X",
+    "fanout913/X",
+    "_33541_/Y",
+    "max_cap315/X",
+    "H3_ECO06_B_164_0/X"
+  ],
+  "nets": 10,
+  "buffers": 151
+}
